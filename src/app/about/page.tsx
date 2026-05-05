@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { profile } from "@/config/profile";
+import { PunchCard } from "@/components/content/PunchCard";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "About",
@@ -13,11 +15,12 @@ export default function AboutPage() {
       style={{
         maxWidth: "750px",
         margin: "0 auto",
-        padding: "4rem 1.5rem",
+        padding: "4rem 1rem",
         minHeight: "80vh",
       }}
     >
       {/* Header */}
+      <ScrollReveal>
       <div style={{ marginBottom: "3rem" }}>
         <span
           style={{
@@ -26,7 +29,7 @@ export default function AboutPage() {
             color: "var(--accent)",
             textTransform: "uppercase",
             letterSpacing: "0.1em",
-            fontWeight: 600,
+            fontWeight: 700,
             display: "block",
             marginBottom: "0.75rem",
           }}
@@ -37,7 +40,7 @@ export default function AboutPage() {
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(2rem, 4vw, 3rem)",
-            fontWeight: 400,
+            fontWeight: 800,
             color: "var(--fg)",
             letterSpacing: "-0.03em",
             lineHeight: 1.1,
@@ -46,65 +49,46 @@ export default function AboutPage() {
         >
           {profile.name}
         </h1>
-        <p
-          style={{
-            fontSize: "1.1rem",
-            color: "var(--fg-secondary)",
-            lineHeight: 1.7,
-            marginBottom: "0.5rem",
-          }}
-        >
+        <p style={{ fontSize: "1.1rem", color: "var(--fg-secondary)", lineHeight: 1.7, marginBottom: "0.5rem" }}>
           {profile.role} at {profile.university}, {profile.location}.
         </p>
-        <p
-          style={{
-            fontSize: "0.95rem",
-            color: "var(--fg-secondary)",
-            lineHeight: 1.7,
-          }}
-        >
+        <p style={{ fontSize: "0.95rem", color: "var(--fg-secondary)", lineHeight: 1.7, fontFamily: "var(--font-mono)" }}>
           CGPA: {profile.cgpa} · Graduating {profile.graduationYear}
         </p>
       </div>
+      </ScrollReveal>
 
       {/* Intro */}
+      <ScrollReveal delay={50}>
       <section style={{ marginBottom: "3rem" }}>
-        <p
-          style={{
-            fontSize: "1rem",
-            color: "var(--fg-secondary)",
-            lineHeight: 1.8,
-            marginBottom: "1rem",
-          }}
-        >
+        <p style={{ fontSize: "1rem", color: "var(--fg-secondary)", lineHeight: 1.8, marginBottom: "1rem" }}>
           I like building things that expose what I don&apos;t understand yet. Most of my projects start with a question I can&apos;t answer, and end with a system that forces me to learn the answer by building it.
         </p>
-        <p
-          style={{
-            fontSize: "1rem",
-            color: "var(--fg-secondary)",
-            lineHeight: 1.8,
-          }}
-        >
-          I write field notes to document the messy middle of learning — the bugs, the failed assumptions, the things that clicked on the third try. This portfolio is that documentation system.
+        <p style={{ fontSize: "1rem", color: "var(--fg-secondary)", lineHeight: 1.8 }}>
+          I write to document the messy middle of learning — the bugs, the failed assumptions, the things that clicked on the third try. This portfolio is that documentation system.
         </p>
       </section>
+      </ScrollReveal>
+
+      {/* Punch Card */}
+      <ScrollReveal delay={100}>
+      <section style={{ marginBottom: "3rem" }}>
+        <PunchCard />
+      </section>
+      </ScrollReveal>
 
       {/* What I care about */}
+      <ScrollReveal delay={50}>
       <section style={{ marginBottom: "3rem" }}>
         <SectionLabel>What I care about</SectionLabel>
-        <p
-          style={{
-            fontSize: "0.95rem",
-            color: "var(--fg-secondary)",
-            lineHeight: 1.8,
-          }}
-        >
+        <p style={{ fontSize: "0.95rem", color: "var(--fg-secondary)", lineHeight: 1.8 }}>
           Building systems that work, not just demos that impress. Writing code that the next person can read. Shipping things before they&apos;re perfect. Documenting the process while the confusion is still fresh. Finishing what I start.
         </p>
       </section>
+      </ScrollReveal>
 
       {/* Beliefs */}
+      <ScrollReveal delay={50}>
       <section style={{ marginBottom: "3rem" }}>
         <SectionLabel>Beliefs</SectionLabel>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -116,7 +100,7 @@ export default function AboutPage() {
                 color: "var(--fg-secondary)",
                 lineHeight: 1.6,
                 paddingLeft: "1rem",
-                borderLeft: "2px solid var(--border)",
+                borderLeft: "2px solid var(--accent)",
               }}
             >
               {belief}
@@ -124,54 +108,40 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Operating Principles */}
+      <ScrollReveal delay={50}>
       <section style={{ marginBottom: "3rem" }}>
         <SectionLabel>Operating Principles</SectionLabel>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           {profile.operatingPrinciples.map((principle, i) => (
-            <div
-              key={principle}
-              style={{
-                display: "flex",
-                gap: "0.75rem",
-                alignItems: "baseline",
-              }}
-            >
+            <div key={principle} style={{ display: "flex", gap: "0.75rem", alignItems: "baseline" }}>
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: "0.7rem",
-                  color: "var(--fg-muted)",
+                  color: "var(--accent)",
                   minWidth: "1.5rem",
+                  fontWeight: 700,
                 }}
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <p
-                style={{
-                  fontSize: "0.9rem",
-                  color: "var(--fg-secondary)",
-                  lineHeight: 1.6,
-                }}
-              >
+              <p style={{ fontSize: "0.9rem", color: "var(--fg-secondary)", lineHeight: 1.6 }}>
                 {principle}
               </p>
             </div>
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Tools */}
+      <ScrollReveal delay={50}>
       <section style={{ marginBottom: "3rem" }}>
         <SectionLabel>Tools I reach for when the problem gets real</SectionLabel>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0.5rem",
-          }}
-        >
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
           {profile.favoriteTools.map((tool) => (
             <span
               key={tool}
@@ -179,10 +149,10 @@ export default function AboutPage() {
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.75rem",
                 padding: "0.375rem 0.75rem",
-                borderRadius: "4px",
-                border: "1px solid var(--border)",
+                border: "2px solid var(--border)",
                 color: "var(--fg-secondary)",
                 background: "var(--surface)",
+                fontWeight: 600,
               }}
             >
               {tool}
@@ -190,66 +160,33 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* Languages */}
+      <ScrollReveal delay={50}>
       <section style={{ marginBottom: "3rem" }}>
         <SectionLabel>Languages</SectionLabel>
-        <p
-          style={{
-            fontSize: "0.9rem",
-            color: "var(--fg-secondary)",
-            fontFamily: "var(--font-mono)",
-          }}
-        >
+        <p style={{ fontSize: "0.9rem", color: "var(--fg-secondary)", fontFamily: "var(--font-mono)", fontWeight: 600 }}>
           {profile.languages.join(" · ")}
         </p>
       </section>
+      </ScrollReveal>
 
       {/* CTAs */}
+      <ScrollReveal delay={50}>
       <section
         style={{
-          borderTop: "1px solid var(--border)",
+          borderTop: "2px solid var(--border)",
           paddingTop: "2rem",
           display: "flex",
-          gap: "1.5rem",
+          gap: "1rem",
           flexWrap: "wrap",
         }}
       >
-        <Link
-          href="/resume"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            padding: "0.75rem 1.5rem",
-            background: "var(--fg)",
-            color: "var(--bg)",
-            borderRadius: "6px",
-            fontSize: "0.875rem",
-            fontWeight: 500,
-            textDecoration: "none",
-          }}
-        >
-          View Resume
-        </Link>
-        <Link
-          href="/contact"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            padding: "0.75rem 1.5rem",
-            border: "1px solid var(--border)",
-            color: "var(--fg-secondary)",
-            borderRadius: "6px",
-            fontSize: "0.875rem",
-            fontWeight: 500,
-            textDecoration: "none",
-          }}
-        >
-          Get in touch
-        </Link>
+        <Link href="/resume" className="btn-primary">View Resume</Link>
+        <Link href="/contact" className="btn-secondary">Get in touch</Link>
       </section>
+      </ScrollReveal>
     </div>
   );
 }
@@ -263,10 +200,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
         color: "var(--accent)",
         textTransform: "uppercase",
         letterSpacing: "0.1em",
-        fontWeight: 600,
+        fontWeight: 700,
         marginBottom: "1rem",
         paddingBottom: "0.5rem",
-        borderBottom: "1px solid var(--border)",
+        borderBottom: "2px solid var(--border)",
       }}
     >
       {children}

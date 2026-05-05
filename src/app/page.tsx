@@ -5,6 +5,8 @@ import { ProjectCard } from "@/components/content/ProjectCard";
 import { FieldNoteCard } from "@/components/content/FieldNoteCard";
 import { CrashReportCard } from "@/components/content/CrashReportCard";
 import { StatusPanel } from "@/components/content/StatusPanel";
+import { StatsCards } from "@/components/content/StatsCards";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
 export default function HomePage() {
   const projects = getFeaturedProjects();
@@ -20,26 +22,33 @@ export default function HomePage() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "6rem 1.5rem 4rem",
+          padding: "6rem 1rem 4rem",
+          position: "relative",
         }}
       >
         <div style={{ maxWidth: "800px" }}>
-          {/* Name */}
+          {/* Name + Stamp */}
+          <ScrollReveal>
+          <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
           <h1
+            className="glitch hero-name"
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(3rem, 7vw, 5rem)",
-              fontWeight: 400,
+              fontSize: "clamp(3rem, 10vw, 6rem)",
+              fontWeight: 800,
               color: "var(--fg)",
               letterSpacing: "-0.03em",
-              lineHeight: 1.05,
-              marginBottom: "1.5rem",
+              lineHeight: 1,
             }}
           >
             {profile.name}
           </h1>
+          <span className="work-stamp">● Open to Work</span>
+          </div>
+          </ScrollReveal>
 
           {/* Hero description */}
+          <ScrollReveal delay={100}>
           <p
             style={{
               fontSize: "clamp(1.1rem, 2vw, 1.3rem)",
@@ -51,8 +60,10 @@ export default function HomePage() {
           >
             {profile.heroDescription}
           </p>
+          </ScrollReveal>
 
           {/* Subtext */}
+          <ScrollReveal delay={150}>
           <p
             style={{
               fontSize: "0.9rem",
@@ -64,8 +75,10 @@ export default function HomePage() {
           >
             {profile.heroSubtext}
           </p>
+          </ScrollReveal>
 
           {/* CTAs */}
+          <ScrollReveal delay={200}>
           <div
             style={{
               display: "flex",
@@ -74,76 +87,37 @@ export default function HomePage() {
               alignItems: "center",
             }}
           >
-            <Link
-              href="/work"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.75rem 1.5rem",
-                background: "var(--fg)",
-                color: "var(--bg)",
-                borderRadius: "6px",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                textDecoration: "none",
-                transition: "opacity 0.2s",
-              }}
-            >
+            <Link href="/work" className="btn-primary">
               View Selected Work
             </Link>
-            <Link
-              href="/field-notes"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.75rem 1.5rem",
-                border: "1px solid var(--border)",
-                color: "var(--fg-secondary)",
-                borderRadius: "6px",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                textDecoration: "none",
-                transition: "all 0.2s",
-              }}
-            >
-              Read Field Notes
+            <Link href="/writing" className="btn-secondary">
+              Read Writing
             </Link>
-            <Link
-              href="/resume"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.75rem 1.5rem",
-                border: "1px solid var(--border)",
-                color: "var(--fg-secondary)",
-                borderRadius: "6px",
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                textDecoration: "none",
-                transition: "all 0.2s",
-              }}
-            >
+            <Link href="/resume" className="btn-secondary">
               Download Resume
             </Link>
           </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* ============================================================
-          STATUS PANEL
+          STATUS PANEL + STATS
           ============================================================ */}
       <section
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 1.5rem 5rem",
+          padding: "0 1rem 5rem",
         }}
       >
-        <div style={{ maxWidth: "600px" }}>
-          <StatusPanel />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
+          <ScrollReveal delay={50}>
+            <StatusPanel />
+          </ScrollReveal>
+          <ScrollReveal delay={100}>
+            <StatsCards />
+          </ScrollReveal>
         </div>
       </section>
 
@@ -154,16 +128,19 @@ export default function HomePage() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 1.5rem 5rem",
+          padding: "0 1rem 5rem",
+          position: "relative",
         }}
       >
         {/* Section header */}
+        <ScrollReveal>
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "baseline",
             marginBottom: "2rem",
+            position: "relative",
           }}
         >
           <div>
@@ -174,19 +151,20 @@ export default function HomePage() {
                 color: "var(--accent)",
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
-                fontWeight: 600,
+                fontWeight: 700,
                 display: "block",
                 marginBottom: "0.5rem",
               }}
             >
-              Selected Work
+              01 / Selected Work
             </span>
             <h2
               style={{
-                fontSize: "1.75rem",
-                fontWeight: 600,
+                fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+                fontWeight: 800,
                 color: "var(--fg)",
                 letterSpacing: "-0.02em",
+                fontFamily: "var(--font-display)",
               }}
             >
               Projects that shaped my engineering
@@ -199,17 +177,20 @@ export default function HomePage() {
               fontSize: "0.75rem",
               color: "var(--fg-secondary)",
               textDecoration: "none",
+              fontWeight: 700,
             }}
           >
             View all →
           </Link>
         </div>
+        </ScrollReveal>
 
         {/* Project grid */}
+        <ScrollReveal delay={100}>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 480px), 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
             gap: "1.25rem",
           }}
         >
@@ -217,6 +198,7 @@ export default function HomePage() {
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
+        </ScrollReveal>
       </section>
 
       {/* ============================================================
@@ -227,9 +209,10 @@ export default function HomePage() {
           style={{
             maxWidth: "1200px",
             margin: "0 auto",
-            padding: "0 1.5rem 5rem",
+            padding: "0 1rem 5rem",
           }}
         >
+          <ScrollReveal>
           <div
             style={{
               display: "flex",
@@ -246,41 +229,45 @@ export default function HomePage() {
                   color: "var(--accent)",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   display: "block",
                   marginBottom: "0.5rem",
                 }}
               >
-                Field Notes
+                02 / Writing
               </span>
               <h2
                 style={{
-                  fontSize: "1.75rem",
-                  fontWeight: 600,
+                  fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+                  fontWeight: 800,
                   color: "var(--fg)",
                   letterSpacing: "-0.02em",
+                  fontFamily: "var(--font-display)",
                 }}
               >
                 Receipts from the learning
               </h2>
             </div>
             <Link
-              href="/field-notes"
+              href="/writing"
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.75rem",
                 color: "var(--fg-secondary)",
                 textDecoration: "none",
+                fontWeight: 700,
               }}
             >
               View all →
             </Link>
           </div>
+          </ScrollReveal>
 
+          <ScrollReveal delay={100}>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 360px), 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))",
               gap: "1.25rem",
             }}
           >
@@ -288,6 +275,7 @@ export default function HomePage() {
               <FieldNoteCard key={note.slug} note={note} />
             ))}
           </div>
+          </ScrollReveal>
         </section>
       )}
 
@@ -299,9 +287,10 @@ export default function HomePage() {
           style={{
             maxWidth: "1200px",
             margin: "0 auto",
-            padding: "0 1.5rem 5rem",
+            padding: "0 1rem 5rem",
           }}
         >
+          <ScrollReveal>
           <div
             style={{
               display: "flex",
@@ -318,41 +307,45 @@ export default function HomePage() {
                   color: "var(--accent)",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   display: "block",
                   marginBottom: "0.5rem",
                 }}
               >
-                Crash Reports
+                03 / Lessons
               </span>
               <h2
                 style={{
-                  fontSize: "1.75rem",
-                  fontWeight: 600,
+                  fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+                  fontWeight: 800,
                   color: "var(--fg)",
                   letterSpacing: "-0.02em",
+                  fontFamily: "var(--font-display)",
                 }}
               >
                 What broke, and what it taught me
               </h2>
             </div>
             <Link
-              href="/crash-reports"
+              href="/lessons"
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.75rem",
                 color: "var(--fg-secondary)",
                 textDecoration: "none",
+                fontWeight: 700,
               }}
             >
               View all →
             </Link>
           </div>
+          </ScrollReveal>
 
+          <ScrollReveal delay={100}>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 480px), 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
               gap: "1.25rem",
             }}
           >
@@ -360,6 +353,7 @@ export default function HomePage() {
               <CrashReportCard key={report.slug} report={report} index={i} />
             ))}
           </div>
+          </ScrollReveal>
         </section>
       )}
 
@@ -370,12 +364,13 @@ export default function HomePage() {
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          padding: "0 1.5rem 6rem",
+          padding: "0 1rem 6rem",
         }}
       >
+        <ScrollReveal>
         <div
           style={{
-            borderTop: "1px solid var(--border)",
+            borderTop: `${2}px solid var(--border)`,
             paddingTop: "3rem",
             maxWidth: "650px",
           }}
@@ -387,6 +382,7 @@ export default function HomePage() {
               color: "var(--fg-secondary)",
               lineHeight: 1.5,
               fontStyle: "italic",
+              fontWeight: 700,
             }}
           >
             &ldquo;{profile.closingLine}&rdquo;
@@ -406,6 +402,7 @@ export default function HomePage() {
                 fontSize: "0.8rem",
                 color: "var(--accent)",
                 textDecoration: "none",
+                fontWeight: 700,
               }}
             >
               Learn more about me →
@@ -417,12 +414,14 @@ export default function HomePage() {
                 fontSize: "0.8rem",
                 color: "var(--fg-secondary)",
                 textDecoration: "none",
+                fontWeight: 700,
               }}
             >
               Get in touch →
             </Link>
           </div>
         </div>
+        </ScrollReveal>
       </section>
     </div>
   );
