@@ -26,79 +26,62 @@ export default function HomePage() {
           position: "relative",
         }}
       >
-        <div style={{ maxWidth: "800px" }}>
-          {/* Name + Stamp */}
-          <ScrollReveal>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
-          <h1
-            className="glitch"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(3rem, 10vw, 6rem)",
-              fontWeight: 800,
-              color: "var(--fg)",
-              letterSpacing: "-0.03em",
-              lineHeight: 1,
-            }}
-          >
-            {profile.name}
-          </h1>
-          <span className="work-stamp">● Open to Work</span>
+        <ScrollReveal>
+        <div className="resume-layout">
+          {/* Sidebar — metadata column */}
+          <div className="resume-sidebar">
+            <div style={{ marginBottom: "2rem" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, display: "block", marginBottom: "0.5rem" }}>Role</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--fg-secondary)", lineHeight: 1.5 }}>{profile.role}</p>
+            </div>
+            <div style={{ marginBottom: "2rem" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, display: "block", marginBottom: "0.5rem" }}>University</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--fg-secondary)", lineHeight: 1.5 }}>{profile.university}</p>
+            </div>
+            <div style={{ marginBottom: "2rem" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, display: "block", marginBottom: "0.5rem" }}>CGPA</span>
+              <p style={{ fontSize: "0.8rem", color: "var(--fg-secondary)" }}>{profile.cgpa}</p>
+            </div>
+            <div>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, display: "block", marginBottom: "0.5rem" }}>Open to</span>
+              {profile.openTo.map(o => (
+                <p key={o} style={{ fontSize: "0.75rem", color: "var(--fg-secondary)", lineHeight: 1.8 }}>— {o}</p>
+              ))}
+            </div>
           </div>
-          </ScrollReveal>
 
-          {/* Hero description */}
-          <ScrollReveal delay={100}>
-          <p
-            style={{
-              fontSize: "clamp(1.1rem, 2vw, 1.3rem)",
-              color: "var(--fg-secondary)",
-              lineHeight: 1.6,
-              marginBottom: "1rem",
-              maxWidth: "650px",
-            }}
-          >
-            {profile.heroDescription}
-          </p>
-          </ScrollReveal>
-
-          {/* Subtext */}
-          <ScrollReveal delay={150}>
-          <p
-            style={{
-              fontSize: "0.9rem",
-              color: "var(--fg-muted)",
-              lineHeight: 1.7,
-              marginBottom: "2.5rem",
-              maxWidth: "600px",
-            }}
-          >
-            {profile.heroSubtext}
-          </p>
-          </ScrollReveal>
-
-          {/* CTAs */}
-          <ScrollReveal delay={200}>
-          <div
-            style={{
-              display: "flex",
-              gap: "1rem",
-              flexWrap: "wrap",
-              alignItems: "center",
-            }}
-          >
-            <Link href="/work" className="btn-primary">
-              View Selected Work
-            </Link>
-            <Link href="/writing" className="btn-secondary">
-              Read Writing
-            </Link>
-            <Link href="/resume" className="btn-secondary">
-              Download Resume
-            </Link>
+          {/* Main — content column */}
+          <div className="resume-main">
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+              <h1
+                className="glitch resume-heading"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2.5rem, 7vw, 5rem)",
+                  fontWeight: 700,
+                  color: "var(--fg)",
+                  letterSpacing: "-0.03em",
+                  lineHeight: 1,
+                }}
+              >
+                {profile.name}
+              </h1>
+              <span className="work-stamp">● Open to Work</span>
+            </div>
+            <p style={{ fontSize: "1rem", color: "var(--fg-secondary)", lineHeight: 1.7, marginBottom: "1rem", maxWidth: "550px" }}>
+              {profile.heroDescription}
+            </p>
+            <p style={{ fontSize: "0.85rem", color: "var(--fg-muted)", lineHeight: 1.7, marginBottom: "2rem", maxWidth: "500px" }}>
+              {profile.heroSubtext}
+            </p>
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <Link href="/work" className="btn-primary">View Selected Work</Link>
+              <Link href="/writing" className="btn-secondary">Read Writing</Link>
+              <Link href="/resume" className="btn-secondary">Download Resume</Link>
+            </div>
           </div>
-          </ScrollReveal>
         </div>
+        </ScrollReveal>
       </section>
 
       {/* ============================================================
@@ -143,6 +126,7 @@ export default function HomePage() {
             position: "relative",
           }}
         >
+          <span className="watermark-number">01</span>
           <div>
             <span
               style={{
@@ -159,6 +143,7 @@ export default function HomePage() {
               01 / Selected Work
             </span>
             <h2
+              className="resume-heading"
               style={{
                 fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                 fontWeight: 800,

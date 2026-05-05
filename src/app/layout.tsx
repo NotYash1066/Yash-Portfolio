@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,22 +7,16 @@ import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import { CommandPalette } from "@/components/navigation/CommandPalette";
 import { profile } from "@/config/profile";
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
-  display: "swap",
-});
-
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["400", "700", "800"],
-  variable: "--font-syne",
   display: "swap",
 });
 
@@ -58,8 +52,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${syne.variable} antialiased`}
-        style={{ fontFamily: "var(--font-inter), var(--font-sans)" }}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
+        style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-to-content">
