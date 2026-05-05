@@ -31,7 +31,7 @@ export default function HomePage() {
           <ScrollReveal>
           <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
           <h1
-            className="glitch"
+            className="glitch hero-display"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 10vw, 6rem)",
@@ -159,6 +159,7 @@ export default function HomePage() {
               01 / Selected Work
             </span>
             <h2
+              className="playfair-heading"
               style={{
                 fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                 fontWeight: 800,
@@ -237,6 +238,7 @@ export default function HomePage() {
                 02 / Writing
               </span>
               <h2
+                className="playfair-heading"
                 style={{
                   fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                   fontWeight: 800,
@@ -315,6 +317,7 @@ export default function HomePage() {
                 03 / Lessons
               </span>
               <h2
+                className="playfair-heading"
                 style={{
                   fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                   fontWeight: 800,
