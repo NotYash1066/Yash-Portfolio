@@ -20,13 +20,13 @@
   --color-success: #00FF41;
   --color-warning: #FFE500;
 
-  --font-display: var(--font-syne), sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-display: var(--font-space-mono), monospace;
+  --font-sans: var(--font-newsreader), serif;
+  --font-mono: var(--font-space-mono), "JetBrains Mono", monospace;
   
-  --shadow-brutal: 4px 4px 0 var(--accent);
-  --shadow-brutal-sm: 2px 2px 0 var(--accent);
-  --shadow-brutal-lg: 6px 6px 0 var(--accent);
+  --shadow-brutal: 4px 4px 0 #CC0000;
+  --shadow-brutal-sm: 2px 2px 0 #CC0000;
+  --shadow-brutal-lg: 6px 6px 0 #CC0000;
   --border-width: 2px;
 }
 
@@ -34,43 +34,43 @@
    CSS Custom Properties for theme switching
    ================================================================ */
 :root {
-  --bg: #0c0c0c;
-  --surface: #0c0c0c;
-  --surface-elevated: #1a1a1a;
-  --fg: #f0ede6;
-  --fg-secondary: #a8a8a8;
-  --fg-muted: #6b6b6b;
-  --border: #f0ede6;
-  --border-subtle: #2a2a2a;
-  --accent: #FFE500;
-  --accent-rgb: 255, 229, 0;
-  --accent-muted: rgba(255, 229, 0, 0.15);
-  --accent-hover: #FFD700;
-  --destructive: #FF3B00;
-  --success: #00FF41;
-  --warning: #FFE500;
-  --shadow: var(--shadow-brutal);
-  --shadow-lg: var(--shadow-brutal-lg);
+  --bg: #0a0a0a;
+  --surface: #0a0a0a;
+  --surface-elevated: #111111;
+  --fg: #e8e8e8;
+  --fg-secondary: #aaaaaa;
+  --fg-muted: #666666;
+  --border: #e8e8e8;
+  --border-subtle: #222222;
+  --accent: #CC0000;
+  --accent-rgb: 204, 0, 0;
+  --accent-muted: rgba(204, 0, 0, 0.12);
+  --accent-hover: #aa0000;
+  --destructive: #CC0000;
+  --success: #00aa44;
+  --warning: #cc8800;
+  --shadow: 4px 4px 0 #CC0000;
+  --shadow-lg: 6px 6px 0 #CC0000;
 }
 
 [data-theme="light"] {
-  --bg: #F5F0E8;
-  --surface: #F5F0E8;
-  --surface-elevated: #EEEAE0;
-  --fg: #0c0c0c;
-  --fg-secondary: #4a4a4a;
-  --fg-muted: #7a7a7a;
-  --border: #0c0c0c;
-  --border-subtle: #d0d0d0;
-  --accent: #FF3B00;
-  --accent-rgb: 255, 59, 0;
-  --accent-muted: rgba(255, 59, 0, 0.1);
-  --accent-hover: #E63500;
-  --destructive: #FF3B00;
-  --success: #00AA2E;
-  --warning: #FF8C00;
-  --shadow: 4px 4px 0 #0c0c0c;
-  --shadow-lg: 6px 6px 0 #0c0c0c;
+  --bg: #f5f5f0;
+  --surface: #f5f5f0;
+  --surface-elevated: #ebebE6;
+  --fg: #0a0a0a;
+  --fg-secondary: #333333;
+  --fg-muted: #777777;
+  --border: #0a0a0a;
+  --border-subtle: #cccccc;
+  --accent: #CC0000;
+  --accent-rgb: 204, 0, 0;
+  --accent-muted: rgba(204, 0, 0, 0.08);
+  --accent-hover: #aa0000;
+  --destructive: #CC0000;
+  --success: #006600;
+  --warning: #cc6600;
+  --shadow: 4px 4px 0 #CC0000;
+  --shadow-lg: 6px 6px 0 #CC0000;
 }
 
 /* ================================================================
@@ -385,6 +385,75 @@ h3 {
 .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
 .stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
 .stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* ================================================================
+   Redacted Intelligence — Classified Styles
+   ================================================================ */
+
+/* Redacted text block */
+.redacted {
+  background: var(--fg);
+  color: transparent;
+  user-select: none;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* Classified stamp */
+.classified-stamp {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border: 3px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transform: rotate(-5deg);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* Unredact animation on hover */
+@keyframes unredact {
+  0% { background: var(--fg); color: transparent; }
+  100% { background: transparent; color: var(--accent); }
+}
+
+.redacted-hover {
+  background: var(--fg);
+  color: transparent;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.redacted-hover:hover {
+  background: var(--accent-muted);
+  color: var(--accent);
+}
+
+/* Document-style dividers */
+.doc-divider {
+  border: none;
+  border-top: 3px solid var(--border);
+  margin: 2rem 0;
+  position: relative;
+}
+
+.doc-divider::after {
+  content: "// CLASSIFIED //";
+  position: absolute;
+  top: -0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg);
+  padding: 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
 
 /* ================================================================
    Scroll Reveal

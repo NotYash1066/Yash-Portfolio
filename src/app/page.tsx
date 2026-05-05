@@ -27,42 +27,50 @@ export default function HomePage() {
         }}
       >
         <div style={{ maxWidth: "800px" }}>
-          {/* Name + Stamp */}
+          {/* Classified header */}
           <ScrollReveal>
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem", flexWrap: "wrap" }}>
+            <span className="classified-stamp">Classified</span>
+            <span className="work-stamp">● Open to Work</span>
+          </div>
+          </ScrollReveal>
+
+          {/* Name — partially redacted on load */}
+          <ScrollReveal delay={50}>
           <h1
             className="glitch"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 10vw, 6rem)",
-              fontWeight: 800,
+              fontWeight: 700,
               color: "var(--fg)",
-              letterSpacing: "-0.03em",
+              letterSpacing: "0.02em",
               lineHeight: 1,
+              marginBottom: "1.5rem",
+              textTransform: "uppercase",
             }}
           >
             {profile.name}
           </h1>
-          <span className="work-stamp">● Open to Work</span>
-          </div>
           </ScrollReveal>
 
           {/* Hero description */}
           <ScrollReveal delay={100}>
           <p
             style={{
-              fontSize: "clamp(1.1rem, 2vw, 1.3rem)",
+              fontSize: "clamp(1rem, 2vw, 1.2rem)",
               color: "var(--fg-secondary)",
-              lineHeight: 1.6,
+              lineHeight: 1.7,
               marginBottom: "1rem",
               maxWidth: "650px",
+              fontFamily: "var(--font-sans)",
             }}
           >
             {profile.heroDescription}
           </p>
           </ScrollReveal>
 
-          {/* Subtext */}
+          {/* Subtext with redacted word */}
           <ScrollReveal delay={150}>
           <p
             style={{
@@ -73,31 +81,21 @@ export default function HomePage() {
               maxWidth: "600px",
             }}
           >
-            {profile.heroSubtext}
+            {profile.heroSubtext}{" "}
+            <span className="redacted-hover" title="hover to reveal">████████████</span>
           </p>
           </ScrollReveal>
 
           {/* CTAs */}
           <ScrollReveal delay={200}>
-          <div
-            style={{
-              display: "flex",
-              gap: "1rem",
-              flexWrap: "wrap",
-              alignItems: "center",
-            }}
-          >
-            <Link href="/work" className="btn-primary">
-              View Selected Work
-            </Link>
-            <Link href="/writing" className="btn-secondary">
-              Read Writing
-            </Link>
-            <Link href="/resume" className="btn-secondary">
-              Download Resume
-            </Link>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+            <Link href="/work" className="btn-primary">View Selected Work</Link>
+            <Link href="/writing" className="btn-secondary">Read Writing</Link>
+            <Link href="/resume" className="btn-secondary">Download Resume</Link>
           </div>
           </ScrollReveal>
+
+          <hr className="doc-divider" style={{ marginTop: "3rem" }} />
         </div>
       </section>
 
