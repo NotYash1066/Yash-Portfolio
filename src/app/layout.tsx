@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
+import { Share_Tech_Mono, Syne, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,23 +7,23 @@ import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import { CommandPalette } from "@/components/navigation/CommandPalette";
 import { profile } from "@/config/profile";
 
-const inter = Inter({
+const shareTechMono = Share_Tech_Mono({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: "400",
+  variable: "--font-share-tech",
+  display: "swap",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "700", "800"],
+  variable: "--font-syne",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -59,8 +59,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased`}
-        style={{ fontFamily: "var(--font-inter), var(--font-sans)" }}
+        className={`${shareTechMono.variable} ${syne.variable} ${jetbrainsMono.variable} antialiased`}
+        style={{ fontFamily: "var(--font-share-tech), monospace" }}
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-to-content">
