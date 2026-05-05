@@ -1,0 +1,30 @@
+---
+title: "Docker finally clicked"
+slug: "docker-finally-clicked"
+date: "2026-03-28"
+type: "field-note"
+category: "Technical"
+tags: ["docker", "devops", "backend"]
+status: "published"
+visibility: "public"
+mood: "technical"
+excerpt: "Three failed attempts at Docker before the mental model landed."
+relatedProject: "shop-management-system"
+relatedCrashReport: ""
+---
+
+I tried to learn Docker three separate times before it clicked.
+
+The first time, I followed a tutorial, typed `docker build`, got a running container, and thought I understood it. I didn't. I was just copying commands.
+
+The second time, I tried to containerize my Shop Management System. I wrote a Dockerfile that worked locally but broke on a different machine because I'd hardcoded paths that only existed on my laptop. That failure taught me more about Docker than the tutorial did.
+
+The third time, I sat down and actually read what a container *is* — not what it does, but what it is. An isolated filesystem with its own process tree. Once I understood that mental model, everything else — volumes, networks, compose files — started making sense as consequences of that idea.
+
+**What clicked:**
+- A container is not a VM. It's a process with its own filesystem.
+- `docker-compose` is not magic. It's just a way to describe multiple containers and how they talk to each other.
+- Volumes exist because containers are ephemeral. If you want data to survive a restart, you mount it.
+- The build context matters. If your `.dockerignore` is wrong, you're shipping your `node_modules` into the image.
+
+The lesson wasn't about Docker specifically. It was about the difference between *using* a tool and *understanding* it. You can use something for months without understanding it. Understanding usually arrives after the third failure.

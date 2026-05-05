@@ -1,0 +1,16 @@
+{
+  "title": "Shop Management System",
+  "slug": "shop-management-system",
+  "date": "2025-03-20",
+  "type": "selected-work",
+  "stack": ["Spring Boot", "Java 17", "PostgreSQL", "Redis", "Docker", "JUnit", "Mockito"],
+  "role": "Backend Developer",
+  "status": "Completed",
+  "featured": true,
+  "summary": "A Spring Boot inventory system with sub-50ms Redis caching, PostgreSQL schema design, and a REST API handling products, categories, suppliers, and employees.",
+  "github": "https://github.com/NotYash1066/shop-management-system",
+  "demo": "",
+  "cover": "/images/projects/shop-management.png",
+  "team": "Solo",
+  "readme": true
+}

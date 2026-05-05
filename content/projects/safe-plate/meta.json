@@ -1,0 +1,19 @@
+{
+  "title": "Safe Plate",
+  "slug": "safe-plate",
+  "date": "2026-02-10",
+  "type": "selected-work",
+  "stack": ["FastAPI", "React", "Tesseract OCR", "OpenCV", "Google Gemini", "Python", "Tailwind CSS"],
+  "role": "Full-stack Developer",
+  "status": "Completed",
+  "featured": true,
+  "summary": "A food ingredient scanner that reads packaging labels via OCR, classifies ingredients by health impact, and scores products — built in 36 hours at DUHacks 5.0.",
+  "github": "https://github.com/NotYash1066",
+  "demo": "",
+  "cover": "/images/projects/safe-plate.png",
+  "team": "Team",
+  "teamName": "Runtime Rebels",
+  "readme": true,
+  "hackathon": "DUHacks 5.0",
+  "hackathonResult": "Top 10 Finalist (100+ Teams)"
+}

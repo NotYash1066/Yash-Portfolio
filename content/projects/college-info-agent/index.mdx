@@ -1,0 +1,59 @@
+---
+title: "CollegeInfo-Agent"
+slug: "college-info-agent"
+---
+
+## Context
+
+Every semester, students across colleges ask the same questions — "What's the 5th-sem syllabus for IT?", "When's the placement drive?", "What are the admission cutoffs?" — and the answers are buried across PDFs, notice boards, and outdated college websites. There's no single system that just answers these questions clearly.
+
+I wanted to build a system that could ingest all of a college's unstructured documents and make them searchable and answerable through natural language.
+
+## Problem
+
+College information is fragmented. Syllabi live in PDFs. Placement notices sit on bulletin boards. Academic calendars get shared as Word documents. Students waste time hunting for information that should be instantly accessible.
+
+## What I Built
+
+A multi-tenant RAG (Retrieval-Augmented Generation) assistant that supports multiple colleges, each with its own isolated knowledge base. Students pick their college and ask questions in plain English. The system retrieves the most relevant document chunks and generates source-backed answers using LLMs.
+
+The architecture includes:
+- A **FastAPI backend** handling document ingestion, chunking, embedding, and retrieval
+- **Supabase Postgres with pgvector** for unified vector storage, auth, and file management
+- **LangChain** for the RAG pipeline orchestration
+- **Google Gemini** for embeddings and answer generation
+- Three separate **React frontends** — Student, College Admin, and Super Admin
+
+## How the Direction Changed
+
+Initially, the idea was to build a plugin that could be embedded into any existing college website. That turned out to be architecturally impractical — college sites have wildly different structures and tech stacks.
+
+So we pivoted: build a standalone multi-college chatbot with its own admin system. The Super Admin creates colleges and assigns College Admins, who upload documents and trigger ingestion. Students interact through a clean chat interface.
+
+We also migrated from ChromaDB to Supabase pgvector mid-project, consolidating vector storage, relational data, auth, and file storage into a single Supabase project.
+
+## Technical Decisions
+
+- **pgvector over ChromaDB**: Unified all data (relational + vector + auth + storage) in one Supabase project. Simpler deployment, fewer moving parts.
+- **RPC-based similarity search**: Used `match_documents(...)` Supabase RPC function with HNSW indexing for fast vector retrieval, with a Python fallback for edge cases.
+- **Multi-tenant RLS**: Row-Level Security policies ensure strict data isolation between colleges.
+- **Document lifecycle states**: Uploaded → Pending Approval → Approved/Rejected → Processing → Completed/Failed. Super Admin controls the pipeline.
+
+## What Broke
+
+- Free Supabase credits ran out — the live demo had to be taken down.
+- Environment variable management across three frontends and one backend was fragile. We learned the hard way that "it works locally" means nothing.
+- Early chunking strategies produced poor retrieval quality. Had to experiment with recursive character splitting and chunk size tuning.
+
+## What I Learned
+
+- Multi-tenant architecture with RLS is powerful but unforgiving if you get the policies wrong.
+- RAG quality depends more on chunking and retrieval strategy than on the LLM itself.
+- The gap between "works locally" and "production-ready" is where most of the real engineering happens.
+- Migrating a vector database mid-project forces you to understand your data model deeply.
+
+## Result
+
+A working multi-college academic assistant with full admin workflow, document lifecycle management, and source-backed RAG responses. Demo was taken down due to credit limits, but the system was tested with 500+ documents and sub-500ms retrieval latency.
+
+This is the project I'm most emotionally proud of — it started with a messy idea, changed direction twice, and still shipped.

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "NeuroHire",
+    "type": "Hackathon Project",
+    "year": "2025",
+    "stack": ["Python", "LangChain", "LLMs", "OCR"],
+    "status": "Prototype",
+    "note": "Resume screening pipeline using LangChain to extract unstructured text into structured profiles. Built at Holboxai Hackathon (Top 5 team). Improved shortlisting efficiency during hackathon testing.",
+    "link": ""
+  },
+  {
+    "name": "Personal Portfolio v1",
+    "type": "Web Project",
+    "year": "2025",
+    "stack": ["HTML", "CSS", "JavaScript"],
+    "status": "Rebuilt",
+    "note": "First attempt at a portfolio. Generic template. Learned why personalization matters. Rebuilt into the Living Engineering Archive.",
+    "link": ""
+  },
+  {
+    "name": "CLI Task Manager",
+    "type": "Learning Experiment",
+    "year": "2024",
+    "stack": ["Python"],
+    "status": "Shipped",
+    "note": "Simple command-line task tracker. First project where I used file I/O and JSON for persistence. Ugly but functional.",
+    "link": ""
+  },
+  {
+    "name": "Calculator GUI",
+    "type": "Learning Experiment",
+    "year": "2024",
+    "stack": ["Java", "Swing"],
+    "status": "Shipped",
+    "note": "Basic calculator with Java Swing. First time building a GUI. Learned event handling and layout managers.",
+    "link": ""
+  }
+]

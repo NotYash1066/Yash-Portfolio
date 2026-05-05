@@ -1,0 +1,48 @@
+---
+title: "SkillSwap"
+slug: "skill-swap"
+---
+
+## Context
+
+Online learning is mostly one-directional — someone teaches, someone watches. But the most effective learning I've experienced has been peer-to-peer: you teach me backend, I teach you frontend. Both parties learn. There was no clean platform that facilitated this kind of mutual skill exchange.
+
+## Problem
+
+Platforms like Udemy and YouTube are great for passive learning, but they don't connect people who want to teach and learn from each other simultaneously. There's no matchmaking, no real-time collaboration, and no structured exchange.
+
+## What I Built
+
+A peer-to-peer skill exchange platform where users register their skills (what they can teach and what they want to learn), get matched with compatible partners based on an algorithm, and exchange skills through real-time video calls, chat, and a collaborative whiteboard.
+
+Key features:
+- **Skill matching algorithm** with compatibility scoring
+- **Real-time chat** with Socket.io and typing indicators
+- **WebRTC video calling** with peer-to-peer signaling
+- **Collaborative whiteboard** using Fabric.js for visual demonstrations
+- **Push notifications** for match requests and messages
+- **Review system** for rating skill exchange sessions
+- **Docker support** for containerized deployment
+
+## Technical Decisions
+
+- **WebRTC with Simple-Peer + PeerJS**: Built the signaling server from scratch instead of using a managed service. More complex, but gave me full control over the connection lifecycle.
+- **Socket.io for everything real-time**: Chat, notifications, call signaling, and whiteboard sync all go through WebSocket connections.
+- **MongoDB**: The flexible schema made sense for user profiles with varying skill sets and match metadata.
+- **JWT auth with role-based access**: Users have different capabilities depending on their match status.
+
+## What Broke
+
+- Managing WebRTC call states across React components was the hardest part. Race conditions between connection setup and UI state caused calls to fail silently. Fixed it with a centralized Context API approach.
+- Stale session cleanup was initially missing — disconnected users would leave ghost sessions. Added a heartbeat-based mechanism that purges stale data within 30 seconds.
+- The whiteboard sync had latency issues with multiple simultaneous users drawing. Had to debounce and batch the canvas events.
+
+## What I Learned
+
+- Real-time systems are deceptively complex. The happy path works quickly; handling disconnections, race conditions, and state sync is where the real work lives.
+- Building a full-stack app solo from scratch teaches you every layer of the stack — authentication, database modeling, real-time infrastructure, and frontend state management.
+- WebRTC is powerful but brittle. The signaling layer needs to be bulletproof.
+
+## Result
+
+A working peer-to-peer learning platform supporting 50+ concurrent sessions, with video calling, chat, matching, and whiteboard. Built solo, end-to-end. The project has comprehensive documentation and is containerized with Docker.

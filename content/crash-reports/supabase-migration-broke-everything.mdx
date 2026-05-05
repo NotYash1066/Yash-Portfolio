@@ -1,0 +1,48 @@
+---
+title: "Supabase migration broke the entire database"
+slug: "supabase-migration-broke-everything"
+date: "2026-02-20"
+severity: "High"
+system: "Database"
+status: "published"
+lesson: "Database migrations in production need rollback plans. Always test migrations on a copy first."
+tags: ["database", "supabase", "migration", "pgvector"]
+relatedProject: "college-info-agent"
+---
+
+## Context
+
+The CollegeInfo-Agent was originally using two separate Supabase projects — one for relational data and auth, another for vector storage. I decided to merge them into a single unified Supabase project to simplify deployment and reduce costs.
+
+## What Broke
+
+During the migration, I ran the unified schema SQL (`000_unified_single_project_schema.sql`) against the production database. The migration created new tables, but it also dropped and recreated existing tables that had live data. All existing document chunks, conversations, and user data were wiped.
+
+## Symptoms
+
+- All previously ingested documents disappeared
+- User accounts existed (in Supabase Auth) but had no corresponding profile data
+- The RAG pipeline returned empty results for every query
+- The admin dashboard showed zero documents, zero colleges
+
+## Root Cause
+
+The migration script used `CREATE TABLE` without `IF NOT EXISTS` for some tables, and for others, it explicitly dropped and recreated them to change column types (especially the vector column dimensions). I didn't realize the script was destructive because I'd only ever run it against empty development databases.
+
+## Fix
+
+1. Restored data from the most recent Supabase backup (lost about 6 hours of data)
+2. Rewrote the migration to use `ALTER TABLE` for existing tables instead of drop-and-recreate
+3. Added `IF NOT EXISTS` guards to all `CREATE TABLE` statements
+4. Created a pre-migration backup script that runs automatically before any migration
+
+## Prevention
+
+- Never run a migration against production without testing it on a copy first
+- Always check if a migration is destructive (drops, truncates, or recreates tables)
+- Keep automated backups and test the restore process
+- Use migration tools that track which migrations have already been applied
+
+## Lesson
+
+Database migrations in production are not development scripts. They need rollback plans, they need to be tested on copies of real data, and they need to be reviewed by someone who didn't write them. The confidence that comes from running a script successfully in dev is dangerous — production data is irreplaceable.

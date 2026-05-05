@@ -1,0 +1,51 @@
+---
+title: "Safe Plate"
+slug: "safe-plate"
+---
+
+## Context
+
+At DUHacks 5.0, our team (Runtime Rebels) wanted to solve a real consumer problem: most people can't decode the ingredient lists on food packaging. What's "maltodextrin"? Is "carrageenan" safe? What if you're allergic to gluten and the label doesn't say "gluten" explicitly?
+
+We had 36 hours to build something that works.
+
+## Problem
+
+Food ingredient labels are confusing. They use chemical names, sugar aliases, and industry jargon that most consumers can't parse. People with allergies, dietary restrictions, or health-conscious goals have no quick way to evaluate what they're about to eat.
+
+## What I Built
+
+A food ingredient scanner that takes an image of a food label (or manual ingredient input), extracts the text via OCR, classifies each ingredient by health impact (harmful, caution, safe), detects hidden sugars, checks against allergies and dietary restrictions, and calculates a 0-100 health score.
+
+The system has two modes:
+- **Image scan**: Upload a photo of food packaging → OCR extracts ingredients → analysis runs
+- **Manual input**: Paste or type ingredient names → get instant classification
+
+Key features:
+- **Ingredient classification** with a static database of 50+ known ingredients + Gemini AI fallback for unknowns
+- **Hidden sugar detection** — identifies 20+ sugar aliases (dextrose, maltose, corn syrup, etc.)
+- **Allergen and dietary filtering** — flags ingredients incompatible with vegan, vegetarian, gluten-free, etc.
+- **Health scoring algorithm** — starts at 100, applies penalties for harmful ingredients and sugar density, bonuses for beneficial ones
+
+## Technical Decisions
+
+- **Pytesseract + OpenCV** on the backend for robust OCR with image preprocessing
+- **Tesseract.js** on the frontend for instant browser-based feedback before hitting the API
+- **Gemini Flash Latest** for classifying unknown ingredients that aren't in the static database
+- **Property-based testing with Hypothesis** to validate the scoring algorithm against edge cases
+
+## What Broke
+
+- OCR accuracy was terrible on real-world packaging — curved surfaces, varied fonts, low contrast. Had to build a preprocessing pipeline with OpenCV (grayscale, thresholding, noise reduction) to get usable text.
+- The health scoring algorithm initially gave perfect scores to products with unknown ingredients (treated absence of data as safety). Had to add penalties for unclassified ingredients.
+- The frontend-backend OCR dual-path created inconsistencies — Tesseract.js and pytesseract sometimes extracted different text from the same image.
+
+## What I Learned
+
+- Hackathon engineering is about trade-offs at speed. You can't build the perfect system in 36 hours, but you can build one that demonstrates the core idea convincingly.
+- OCR on real-world images is much harder than OCR on clean scanned documents.
+- AI fallback for unknown data is powerful but needs guardrails — you can't trust the model's classification blindly.
+
+## Result
+
+Top 10 finalist out of 100+ teams at DUHacks 5.0. A working full-stack food scanner validated across 200+ product scans, deployed on AWS for live field testing during the hackathon.

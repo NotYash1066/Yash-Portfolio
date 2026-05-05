@@ -1,0 +1,18 @@
+{
+  "title": "CollegeInfo-Agent",
+  "slug": "college-info-agent",
+  "date": "2026-03-15",
+  "type": "selected-work",
+  "stack": ["FastAPI", "React", "Supabase", "pgvector", "LangChain", "Google Gemini", "Python"],
+  "role": "Full-stack Developer",
+  "status": "Completed",
+  "featured": true,
+  "summary": "A multi-college RAG assistant that ingests syllabi, placement notices, and calendars — then answers student queries with source-backed, hallucination-resistant responses.",
+  "github": "https://github.com/NotYash1066",
+  "demo": "",
+  "cover": "/images/projects/college-info-agent.png",
+  "team": "Team",
+  "readme": true,
+  "hackathon": "",
+  "hackathonResult": ""
+}

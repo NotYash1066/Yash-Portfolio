@@ -1,0 +1,45 @@
+---
+title: "Shop Management System"
+slug: "shop-management-system"
+---
+
+## Context
+
+I wanted to build something in Java/Spring Boot that went beyond tutorial-level CRUD — something with real relational modeling, caching, and the kind of backend patterns you'd see in production systems.
+
+## Problem
+
+Retail shop operations need a system that handles products, categories, suppliers, and employees with relational integrity, proper authentication, and the kind of performance that doesn't fall apart under load.
+
+## What I Built
+
+A comprehensive RESTful API-based shop management system with Spring Boot. Full CRUD operations for products, categories, suppliers, and employees. Products are linked to categories and suppliers via foreign keys, enforcing relational integrity through JPA/Hibernate.
+
+Key engineering decisions:
+- **Redis caching** with a write-behind strategy for hot SKU lookups — achieved sub-50ms response times
+- **Multi-tenant architecture** using PostgreSQL schemas and Row-Level Security (RLS) for data isolation
+- **Spring Events** for asynchronous state updates, decoupling database writes from the request cycle
+- **JUnit + Mockito** testing with 90% code coverage on critical service layers
+- **Docker containerization** for consistent deployment
+
+## Technical Decisions
+
+- **Spring Security**: Added authentication and role-based access, even though it started as a learning project. Wanted to understand the full stack.
+- **Hibernate ddl-auto=update**: Used for development velocity. In production, you'd want managed migrations.
+- **PostgreSQL over MySQL**: Started with MySQL, but the multi-tenant RLS patterns work better with PostgreSQL.
+
+## What Broke
+
+- Authentication endpoints were initially placeholder implementations — they returned success regardless of credentials. Had to go back and implement proper JWT-based auth.
+- The Redis caching strategy had a subtle bug: cache invalidation wasn't happening on bulk updates. Had to add event-driven cache invalidation.
+- Load testing with Locust revealed that certain queries were doing N+1 selects. Had to add `@EntityGraph` annotations to fix eager/lazy loading.
+
+## What I Learned
+
+- Java/Spring patterns become powerful once you understand the conventions. The framework does a lot, but only if you know what it's doing.
+- Redis caching is not just "put data in Redis." The invalidation strategy is where the complexity lives.
+- Writing tests first would have caught the auth placeholder issue much earlier.
+
+## Result
+
+A production-shape backend system with sub-50ms latency for high-traffic operations, tested under simulated peak load with Locust. Containerized and deployable on AWS EC2.

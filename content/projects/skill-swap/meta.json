@@ -1,0 +1,16 @@
+{
+  "title": "SkillSwap",
+  "slug": "skill-swap",
+  "date": "2025-11-15",
+  "type": "selected-work",
+  "stack": ["Node.js", "Express", "React", "MongoDB", "Socket.io", "WebRTC", "JWT"],
+  "role": "Full-stack Developer",
+  "status": "Completed",
+  "featured": true,
+  "summary": "A peer-to-peer skill exchange platform with real-time video calls, algorithm-based matching, and collaborative whiteboard — built solo with WebRTC signaling from scratch.",
+  "github": "https://github.com/NotYash1066/Skill-Swap",
+  "demo": "",
+  "cover": "/images/projects/skill-swap.png",
+  "team": "Solo",
+  "readme": true
+}
