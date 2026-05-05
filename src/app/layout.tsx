@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, Cormorant_Garamond, Outfit, JetBrains_Mono } from "next/font/google";
+import { Barlow_Condensed, Libre_Baskerville, Barlow, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,25 +7,25 @@ import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import { CommandPalette } from "@/components/navigation/CommandPalette";
 import { profile } from "@/config/profile";
 
-const anton = Anton({
+const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-anton",
+  weight: ["700", "900"],
+  variable: "--font-barlow-condensed",
   display: "swap",
 });
 
-const cormorantGaramond = Cormorant_Garamond({
+const libreBaskerville = Libre_Baskerville({
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
+  weight: ["400", "700"],
   style: ["normal", "italic"],
-  variable: "--font-cormorant",
+  variable: "--font-baskerville",
   display: "swap",
 });
 
-const outfit = Outfit({
+const barlow = Barlow({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-outfit",
+  weight: ["400", "500", "600"],
+  variable: "--font-barlow",
   display: "swap",
 });
 
@@ -67,8 +67,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${anton.variable} ${cormorantGaramond.variable} ${outfit.variable} ${jetbrainsMono.variable} antialiased`}
-        style={{ fontFamily: "var(--font-outfit)" }}
+        className={`${barlowCondensed.variable} ${libreBaskerville.variable} ${barlow.variable} ${jetbrainsMono.variable} antialiased`}
+        style={{ fontFamily: "var(--font-barlow)" }}
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-to-content">

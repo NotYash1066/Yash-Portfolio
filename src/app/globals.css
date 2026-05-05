@@ -20,9 +20,8 @@
   --color-success: #00FF41;
   --color-warning: #FFE500;
 
-  --font-display: var(--font-anton), sans-serif;
-  --font-sans: var(--font-outfit), sans-serif;
-  --font-serif: var(--font-cormorant), serif;
+  --font-display: var(--font-barlow-condensed), sans-serif;
+  --font-sans: var(--font-barlow), sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   
   --shadow-brutal: 4px 4px 0 var(--accent);
@@ -35,23 +34,23 @@
    CSS Custom Properties for theme switching
    ================================================================ */
 :root {
-  --bg: #0c0c0c;
-  --surface: #0c0c0c;
-  --surface-elevated: #1a1a1a;
-  --fg: #f0ede6;
-  --fg-secondary: #a8a8a8;
-  --fg-muted: #6b6b6b;
-  --border: #f0ede6;
-  --border-subtle: #2a2a2a;
-  --accent: #FF0000;
-  --accent-rgb: 255, 0, 0;
-  --accent-muted: rgba(255, 229, 0, 0.15);
-  --accent-hover: #FFD700;
+  --bg: #0a0f0a;
+  --surface: #0a0f0a;
+  --surface-elevated: #111811;
+  --fg: #e8f5e8;
+  --fg-secondary: #8ab88a;
+  --fg-muted: #4a6b4a;
+  --border: #00FF41;
+  --border-subtle: #1a2a1a;
+  --accent: #E63946;
+  --accent-rgb: 230, 57, 70;
+  --accent-muted: rgba(124, 58, 237, 0.15);
+  --accent-hover: #6D28D9;
   --destructive: #FF3B00;
   --success: #00FF41;
   --warning: #FFE500;
-  --shadow: 4px 4px 0 #FF0000;
-  --shadow-lg: 6px 6px 0 #FF0000;
+  --shadow: 4px 4px 0 #E63946;
+  --shadow-lg: 6px 6px 0 #E63946;
 }
 
 [data-theme="light"] {
@@ -63,15 +62,15 @@
   --fg-muted: #7a7a7a;
   --border: #0c0c0c;
   --border-subtle: #d0d0d0;
-  --accent: #CC0000;
-  --accent-rgb: 255, 59, 0;
-  --accent-muted: rgba(255, 59, 0, 0.1);
-  --accent-hover: #E63500;
+  --accent: #E63946;
+  --accent-rgb: 230, 57, 70;
+  --accent-muted: rgba(124, 58, 237, 0.1);
+  --accent-hover: #6D28D9;
   --destructive: #FF3B00;
   --success: #00AA2E;
   --warning: #FF8C00;
-  --shadow: 4px 4px 0 #CC0000;
-  --shadow-lg: 6px 6px 0 #CC0000;
+  --shadow: 4px 4px 0 #E63946;
+  --shadow-lg: 6px 6px 0 #E63946;
 }
 
 /* ================================================================
@@ -775,12 +774,4 @@ h3 {
   transition: width 0.1s linear;
 }
 
-/* ================================================================
-   Section Heading (Cormorant Garamond italic)
-   ================================================================ */
-.section-heading {
-  font-family: var(--font-cormorant), serif !important;
-  font-style: italic;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-}
+.serif-heading { font-family: var(--font-baskerville), serif !important; font-style: italic; }

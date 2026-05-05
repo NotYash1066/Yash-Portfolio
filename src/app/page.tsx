@@ -159,7 +159,7 @@ export default function HomePage() {
               01 / Selected Work
             </span>
             <h2
-              className="section-heading"
+              className="serif-heading"
               style={{
                 fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                 fontWeight: 800,
@@ -238,7 +238,7 @@ export default function HomePage() {
                 02 / Writing
               </span>
               <h2
-                className="section-heading"
+                className="serif-heading"
                 style={{
                   fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                   fontWeight: 800,
@@ -317,7 +317,7 @@ export default function HomePage() {
                 03 / Lessons
               </span>
               <h2
-                className="section-heading"
+                className="serif-heading"
                 style={{
                   fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
                   fontWeight: 800,
