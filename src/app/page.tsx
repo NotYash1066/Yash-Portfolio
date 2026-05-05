@@ -7,6 +7,7 @@ import { CrashReportCard } from "@/components/content/CrashReportCard";
 import { StatusPanel } from "@/components/content/StatusPanel";
 import { StatsCards } from "@/components/content/StatsCards";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
+import { OsWindow } from "@/components/layout/OsWindow";
 
 export default function HomePage() {
   const projects = getFeaturedProjects();
@@ -26,12 +27,13 @@ export default function HomePage() {
           position: "relative",
         }}
       >
-        <div style={{ maxWidth: "800px" }}>
+        <OsWindow title="portfolio.exe — yash@archive:~$">
+        <div style={{ maxWidth: "800px", padding: "1rem 0" }}>
           {/* Name + Stamp */}
           <ScrollReveal>
           <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
           <h1
-            className="glitch"
+            className="glitch cursor"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 10vw, 6rem)",
@@ -50,12 +52,14 @@ export default function HomePage() {
           {/* Hero description */}
           <ScrollReveal delay={100}>
           <p
+            className="terminal-prompt"
             style={{
-              fontSize: "clamp(1.1rem, 2vw, 1.3rem)",
+              fontSize: "clamp(1rem, 2vw, 1.1rem)",
               color: "var(--fg-secondary)",
               lineHeight: 1.6,
               marginBottom: "1rem",
               maxWidth: "650px",
+              fontFamily: "var(--font-mono)",
             }}
           >
             {profile.heroDescription}
@@ -66,11 +70,12 @@ export default function HomePage() {
           <ScrollReveal delay={150}>
           <p
             style={{
-              fontSize: "0.9rem",
+              fontSize: "0.85rem",
               color: "var(--fg-muted)",
               lineHeight: 1.7,
               marginBottom: "2.5rem",
               maxWidth: "600px",
+              fontFamily: "var(--font-mono)",
             }}
           >
             {profile.heroSubtext}
@@ -88,17 +93,18 @@ export default function HomePage() {
             }}
           >
             <Link href="/work" className="btn-primary">
-              View Selected Work
+              ./view-work.sh
             </Link>
             <Link href="/writing" className="btn-secondary">
-              Read Writing
+              cat writing/
             </Link>
             <Link href="/resume" className="btn-secondary">
-              Download Resume
+              curl resume.pdf
             </Link>
           </div>
           </ScrollReveal>
         </div>
+        </OsWindow>
       </section>
 
       {/* ============================================================
@@ -113,7 +119,9 @@ export default function HomePage() {
       >
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
           <ScrollReveal delay={50}>
-            <StatusPanel />
+            <OsWindow title="status.log">
+              <StatusPanel />
+            </OsWindow>
           </ScrollReveal>
           <ScrollReveal delay={100}>
             <StatsCards />

@@ -21,12 +21,12 @@
   --color-warning: #FFE500;
 
   --font-display: var(--font-syne), sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-sans: var(--font-share-tech), monospace;
+  --font-mono: var(--font-share-tech), "JetBrains Mono", monospace;
   
-  --shadow-brutal: 4px 4px 0 var(--accent);
-  --shadow-brutal-sm: 2px 2px 0 var(--accent);
-  --shadow-brutal-lg: 6px 6px 0 var(--accent);
+  --shadow-brutal: 4px 4px 0 #4d9fff;
+  --shadow-brutal-sm: 2px 2px 0 #4d9fff;
+  --shadow-brutal-lg: 6px 6px 0 #4d9fff;
   --border-width: 2px;
 }
 
@@ -34,43 +34,43 @@
    CSS Custom Properties for theme switching
    ================================================================ */
 :root {
-  --bg: #0c0c0c;
-  --surface: #0c0c0c;
-  --surface-elevated: #1a1a1a;
-  --fg: #f0ede6;
-  --fg-secondary: #a8a8a8;
-  --fg-muted: #6b6b6b;
-  --border: #f0ede6;
-  --border-subtle: #2a2a2a;
-  --accent: #FFE500;
-  --accent-rgb: 255, 229, 0;
-  --accent-muted: rgba(255, 229, 0, 0.15);
-  --accent-hover: #FFD700;
-  --destructive: #FF3B00;
-  --success: #00FF41;
-  --warning: #FFE500;
-  --shadow: var(--shadow-brutal);
-  --shadow-lg: var(--shadow-brutal-lg);
+  --bg: #0d0d1a;
+  --surface: #0d0d1a;
+  --surface-elevated: #13132a;
+  --fg: #e0e0ff;
+  --fg-secondary: #9090cc;
+  --fg-muted: #5050aa;
+  --border: #3030aa;
+  --border-subtle: #1a1a3a;
+  --accent: #4d9fff;
+  --accent-rgb: 77, 159, 255;
+  --accent-muted: rgba(77, 159, 255, 0.12);
+  --accent-hover: #6aafff;
+  --destructive: #ff4444;
+  --success: #44ff88;
+  --warning: #ffaa00;
+  --shadow: 4px 4px 0 #4d9fff;
+  --shadow-lg: 6px 6px 0 #4d9fff;
 }
 
 [data-theme="light"] {
-  --bg: #F5F0E8;
-  --surface: #F5F0E8;
-  --surface-elevated: #EEEAE0;
-  --fg: #0c0c0c;
-  --fg-secondary: #4a4a4a;
-  --fg-muted: #7a7a7a;
-  --border: #0c0c0c;
-  --border-subtle: #d0d0d0;
-  --accent: #FF3B00;
-  --accent-rgb: 255, 59, 0;
-  --accent-muted: rgba(255, 59, 0, 0.1);
-  --accent-hover: #E63500;
-  --destructive: #FF3B00;
-  --success: #00AA2E;
-  --warning: #FF8C00;
-  --shadow: 4px 4px 0 #0c0c0c;
-  --shadow-lg: 6px 6px 0 #0c0c0c;
+  --bg: #f0f0ff;
+  --surface: #f0f0ff;
+  --surface-elevated: #e0e0f5;
+  --fg: #0d0d1a;
+  --fg-secondary: #3030aa;
+  --fg-muted: #7070bb;
+  --border: #0d0d1a;
+  --border-subtle: #c0c0e0;
+  --accent: #0044cc;
+  --accent-rgb: 0, 68, 204;
+  --accent-muted: rgba(0, 68, 204, 0.1);
+  --accent-hover: #0033aa;
+  --destructive: #cc0000;
+  --success: #006600;
+  --warning: #cc6600;
+  --shadow: 4px 4px 0 #0044cc;
+  --shadow-lg: 6px 6px 0 #0044cc;
 }
 
 /* ================================================================
@@ -385,6 +385,79 @@ h3 {
 .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
 .stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
 .stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* ================================================================
+   System Failure — OS Window Chrome & Terminal Styles
+   ================================================================ */
+
+/* OS window wrapper */
+.os-window {
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-brutal);
+  overflow: hidden;
+}
+
+.os-window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--border);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.os-window-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  opacity: 0.6;
+}
+
+.os-window-body {
+  padding: 1.25rem;
+  background: var(--surface);
+}
+
+/* Terminal prompt */
+.terminal-prompt::before {
+  content: "$ ";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Scanline overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Blinking cursor */
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor::after {
+  content: "▮";
+  color: var(--accent);
+  animation: blink-cursor 1s step-end infinite;
+  margin-left: 2px;
+}
 
 /* ================================================================
    Scroll Reveal
