@@ -1,8 +1,17 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+  ReactNode,
+} from "react";
 
 type Theme = "dark" | "light";
+
+const THEME_STORAGE_KEY = "theme";
+const THEME_CHANGE_EVENT = "portfolio-theme-change";
 
 const ThemeContext = createContext<{
   theme: Theme;
@@ -16,36 +25,48 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
+function isTheme(value: string | null): value is Theme {
+  return value === "dark" || value === "light";
+}
+
+function getPreferredTheme(): Theme {
+  if (typeof window === "undefined") return "dark";
+
+  const saved = localStorage.getItem(THEME_STORAGE_KEY);
+  if (isTheme(saved)) return saved;
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function subscribeToThemeChanges(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(THEME_CHANGE_EVENT, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
+  };
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore<Theme>(
+    subscribeToThemeChanges,
+    getPreferredTheme,
+    () => "dark"
+  );
 
   useEffect(() => {
-    setMounted(true);
-    const saved = localStorage.getItem("theme") as Theme | null;
-    if (saved) {
-      setTheme(saved);
-      document.documentElement.setAttribute("data-theme", saved);
-    } else {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      const initial = prefersDark ? "dark" : "light";
-      setTheme(initial);
-      document.documentElement.setAttribute("data-theme", initial);
-    }
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    localStorage.setItem("theme", next);
+    localStorage.setItem(THEME_STORAGE_KEY, next);
     document.documentElement.setAttribute("data-theme", next);
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   };
-
-  if (!mounted) {
-    return <div style={{ visibility: "hidden" }}>{children}</div>;
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

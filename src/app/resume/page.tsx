@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { profile } from "@/config/profile";
 
 export const metadata: Metadata = {
