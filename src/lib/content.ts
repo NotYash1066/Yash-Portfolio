@@ -63,10 +63,10 @@ export function getProjectReadme(slug: string): string | null {
 }
 
 /* ================================================================
-   Field Notes
+   Writing (formerly Field Notes)
    ================================================================ */
 export function getAllFieldNotes(): FieldNote[] {
-  const notesDir = path.join(contentDir, "field-notes");
+  const notesDir = path.join(contentDir, "writing");
   if (!fs.existsSync(notesDir)) return [];
 
   const files = fs.readdirSync(notesDir).filter((f) => f.endsWith(".mdx"));
@@ -93,7 +93,7 @@ export function getAllFieldNotes(): FieldNote[] {
 }
 
 export function getFieldNoteBySlug(slug: string): FieldNote | null {
-  const notesDir = path.join(contentDir, "field-notes");
+  const notesDir = path.join(contentDir, "writing");
   if (!fs.existsSync(notesDir)) return null;
 
   const files = fs.readdirSync(notesDir).filter((f) => f.endsWith(".mdx"));
@@ -117,10 +117,10 @@ export function getFieldNoteBySlug(slug: string): FieldNote | null {
 }
 
 /* ================================================================
-   Crash Reports
+   Lessons (formerly Crash Reports)
    ================================================================ */
 export function getAllCrashReports(): CrashReport[] {
-  const reportsDir = path.join(contentDir, "crash-reports");
+  const reportsDir = path.join(contentDir, "lessons");
   if (!fs.existsSync(reportsDir)) return [];
 
   const files = fs.readdirSync(reportsDir).filter((f) => f.endsWith(".mdx"));
@@ -147,7 +147,7 @@ export function getAllCrashReports(): CrashReport[] {
 }
 
 export function getCrashReportBySlug(slug: string): CrashReport | null {
-  const reportsDir = path.join(contentDir, "crash-reports");
+  const reportsDir = path.join(contentDir, "lessons");
   if (!fs.existsSync(reportsDir)) return null;
 
   const files = fs.readdirSync(reportsDir).filter((f) => f.endsWith(".mdx"));

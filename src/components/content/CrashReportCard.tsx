@@ -19,17 +19,13 @@ export function CrashReportCard({
 
   return (
     <Link
-      href={`/crash-reports/${report.slug}`}
+      href={`/lessons/${report.slug}`}
+      className="card"
       style={{
         display: "block",
         padding: "1.5rem",
-        border: "1px solid var(--border)",
-        borderRadius: "6px",
-        background: "var(--surface)",
         textDecoration: "none",
-        transition: "border-color 0.2s ease",
       }}
-      className="crash-report-card"
     >
       {/* Top row */}
       <div
@@ -48,6 +44,7 @@ export function CrashReportCard({
             color: "var(--fg-muted)",
             textTransform: "uppercase",
             letterSpacing: "0.08em",
+            fontWeight: 700,
           }}
         >
           Crash Report #{String(index + 1).padStart(3, "0")}
@@ -60,6 +57,7 @@ export function CrashReportCard({
             color: severityColor,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
+            fontWeight: 700,
           }}
         >
           {report.severity}
@@ -78,12 +76,14 @@ export function CrashReportCard({
 
       {/* Title */}
       <h3
+        className="glitch"
         style={{
           fontSize: "1.125rem",
-          fontWeight: 600,
+          fontWeight: 700,
           color: "var(--fg)",
           marginBottom: "0.5rem",
           letterSpacing: "-0.01em",
+          fontFamily: "var(--font-display)",
         }}
       >
         {report.title}
@@ -120,9 +120,9 @@ export function CrashReportCard({
                 fontFamily: "var(--font-mono)",
                 fontSize: "0.625rem",
                 padding: "0.2rem 0.5rem",
-                borderRadius: "4px",
                 border: "1px solid var(--border)",
                 color: "var(--fg-muted)",
+                fontWeight: 600,
               }}
             >
               {tag}
@@ -142,12 +142,6 @@ export function CrashReportCard({
           })}
         </span>
       </div>
-
-      <style jsx>{`
-        .crash-report-card:hover {
-          border-color: var(--fg-muted) !important;
-        }
-      `}</style>
     </Link>
   );
 }

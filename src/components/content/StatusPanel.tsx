@@ -12,19 +12,24 @@ export function StatusPanel() {
   return (
     <div
       style={{
-        border: "1px solid var(--border)",
-        borderRadius: "6px",
+        border: `${2}px solid var(--border)`,
         background: "var(--surface)",
         overflow: "hidden",
+        boxShadow: "var(--shadow-brutal)",
       }}
     >
       {/* Header */}
       <div
         style={{
           padding: "1rem 1.5rem",
-          borderBottom: "1px solid var(--border)",
+          borderBottom: `${2}px solid var(--border)`,
+          display: "flex",
+          alignItems: "center",
+          gap: "0.625rem",
+          background: "var(--surface-elevated)",
         }}
       >
+        <span className="live-dot" aria-hidden="true" />
         <span
           style={{
             fontFamily: "var(--font-mono)",
@@ -32,7 +37,7 @@ export function StatusPanel() {
             color: "var(--accent)",
             textTransform: "uppercase",
             letterSpacing: "0.1em",
-            fontWeight: 600,
+            fontWeight: 700,
           }}
         >
           Current Status
@@ -47,7 +52,7 @@ export function StatusPanel() {
             style={{
               padding: "0.875rem 1.5rem",
               borderBottom:
-                i < items.length - 1 ? "1px solid var(--border-subtle)" : "none",
+                i < items.length - 1 ? `1px solid var(--border-subtle)` : "none",
               display: "flex",
               flexDirection: "column",
               gap: "0.25rem",
@@ -60,6 +65,7 @@ export function StatusPanel() {
                 color: "var(--fg-muted)",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
+                fontWeight: 700,
               }}
             >
               {item.label}

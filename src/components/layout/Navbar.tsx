@@ -9,8 +9,8 @@ import { profile } from "@/config/profile";
 const navLinks = [
   { href: "/", label: "Index" },
   { href: "/work", label: "Work" },
-  { href: "/field-notes", label: "Field Notes" },
-  { href: "/crash-reports", label: "Crash Reports" },
+  { href: "/writing", label: "Writing" },
+  { href: "/lessons", label: "Lessons" },
   { href: "/now", label: "Now" },
   { href: "/about", label: "About" },
 ];
@@ -26,16 +26,15 @@ export function Navbar() {
           position: "sticky",
           top: 0,
           zIndex: 50,
-          borderBottom: "1px solid var(--border)",
+          borderBottom: `${2}px solid var(--border)`,
           background: "var(--bg)",
-          backdropFilter: "blur(12px)",
         }}
       >
         <div
           style={{
             maxWidth: "1200px",
             margin: "0 auto",
-            padding: "0 1.5rem",
+            padding: "0 1rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -50,7 +49,7 @@ export function Navbar() {
               fontSize: "0.8rem",
               color: "var(--fg)",
               textDecoration: "none",
-              fontWeight: 500,
+              fontWeight: 700,
               letterSpacing: "0.02em",
             }}
           >
@@ -76,12 +75,16 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   style={{
-                    fontSize: "0.825rem",
                     color: isActive ? "var(--fg)" : "var(--fg-secondary)",
                     textDecoration: "none",
                     transition: "color 0.2s",
-                    fontWeight: isActive ? 500 : 400,
+                    fontWeight: isActive ? 700 : 600,
+                    fontFamily: "var(--font-mono)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    fontSize: "0.7rem",
                   }}
+                  className={`nav-link${isActive ? " nav-link-active" : ""}`}
                 >
                   {link.label}
                 </Link>
@@ -101,13 +104,13 @@ export function Navbar() {
                 alignItems: "center",
                 gap: "0.5rem",
                 padding: "0.375rem 0.75rem",
-                borderRadius: "6px",
-                border: "1px solid var(--border)",
+                border: `${2}px solid var(--border)`,
                 background: "transparent",
                 color: "var(--fg-muted)",
                 fontSize: "0.75rem",
                 cursor: "pointer",
                 fontFamily: "var(--font-mono)",
+                fontWeight: 700,
               }}
               className="cmd-k-hint"
               aria-label="Open command palette"
@@ -128,19 +131,18 @@ export function Navbar() {
                 justifyContent: "center",
                 width: "36px",
                 height: "36px",
-                borderRadius: "6px",
-                border: "1px solid var(--border)",
+                border: `${2}px solid var(--border)`,
                 background: "transparent",
                 color: "var(--fg-secondary)",
                 cursor: "pointer",
               }}
             >
               {mobileOpen ? (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4l8 8M12 4l-8 8" />
                 </svg>
               ) : (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M2 4h12M2 8h12M2 12h12" />
                 </svg>
               )}
@@ -158,10 +160,11 @@ export function Navbar() {
             top: "60px",
             zIndex: 40,
             background: "var(--bg)",
-            padding: "2rem 1.5rem",
+            padding: "2rem 1rem",
             display: "flex",
             flexDirection: "column",
             gap: "1.5rem",
+            borderTop: `${2}px solid var(--border)`,
           }}
         >
           {navLinks.map((link) => {
@@ -178,9 +181,12 @@ export function Navbar() {
                   fontSize: "1.25rem",
                   color: isActive ? "var(--fg)" : "var(--fg-secondary)",
                   textDecoration: "none",
-                  fontWeight: isActive ? 500 : 400,
+                  fontWeight: isActive ? 700 : 600,
                   paddingBottom: "1rem",
-                  borderBottom: "1px solid var(--border)",
+                  borderBottom: `${2}px solid var(--border)`,
+                  fontFamily: "var(--font-mono)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.05em",
                 }}
               >
                 {link.label}
@@ -194,6 +200,10 @@ export function Navbar() {
               fontSize: "1.25rem",
               color: "var(--accent)",
               textDecoration: "none",
+              fontFamily: "var(--font-mono)",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
             }}
           >
             Resume ↗

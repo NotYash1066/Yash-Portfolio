@@ -6,17 +6,13 @@ import type { FieldNote } from "@/lib/types";
 export function FieldNoteCard({ note }: { note: FieldNote }) {
   return (
     <Link
-      href={`/field-notes/${note.slug}`}
+      href={`/writing/${note.slug}`}
+      className="card"
       style={{
         display: "block",
         padding: "1.5rem",
-        border: "1px solid var(--border)",
-        borderRadius: "6px",
-        background: "var(--surface)",
         textDecoration: "none",
-        transition: "border-color 0.2s ease",
       }}
-      className="field-note-card"
     >
       {/* Top row */}
       <div
@@ -35,6 +31,7 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
             color: "var(--accent)",
             textTransform: "uppercase",
             letterSpacing: "0.08em",
+            fontWeight: 700,
           }}
         >
           {note.category}
@@ -67,12 +64,14 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
 
       {/* Title */}
       <h3
+        className="glitch"
         style={{
           fontSize: "1.125rem",
-          fontWeight: 600,
+          fontWeight: 700,
           color: "var(--fg)",
           marginBottom: "0.5rem",
           letterSpacing: "-0.01em",
+          fontFamily: "var(--font-display)",
         }}
       >
         {note.title}
@@ -99,9 +98,9 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
               fontFamily: "var(--font-mono)",
               fontSize: "0.625rem",
               padding: "0.2rem 0.5rem",
-              borderRadius: "4px",
               border: "1px solid var(--border)",
               color: "var(--fg-muted)",
+              fontWeight: 600,
             }}
           >
             {tag}
@@ -113,21 +112,15 @@ export function FieldNoteCard({ note }: { note: FieldNote }) {
               fontFamily: "var(--font-mono)",
               fontSize: "0.625rem",
               padding: "0.2rem 0.5rem",
-              borderRadius: "4px",
-              background: "var(--accent-muted)",
-              color: "var(--accent)",
+              background: "var(--accent)",
+              color: "var(--bg)",
+              fontWeight: 700,
             }}
           >
             {note.mood}
           </span>
         )}
       </div>
-
-      <style jsx>{`
-        .field-note-card:hover {
-          border-color: var(--fg-muted) !important;
-        }
-      `}</style>
     </Link>
   );
 }
