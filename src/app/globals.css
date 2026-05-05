@@ -1,0 +1,452 @@
+@import "tailwindcss";
+
+/* ================================================================
+   LIVING ENGINEERING ARCHIVE — Design System
+   ================================================================ */
+
+@theme inline {
+  --color-background: #0a0a0b;
+  --color-surface: #141416;
+  --color-surface-elevated: #1c1c1f;
+  --color-foreground: #ededec;
+  --color-foreground-secondary: #8b8b8b;
+  --color-foreground-muted: #5a5a5a;
+  --color-border: #262628;
+  --color-border-subtle: #1e1e20;
+  --color-accent: #5b8dce;
+  --color-accent-muted: rgba(91, 141, 206, 0.12);
+  --color-accent-hover: #6e9dd6;
+  --color-destructive: #e5534b;
+  --color-success: #57ab5a;
+  --color-warning: #c69026;
+
+  --font-display: "Instrument Serif", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ================================================================
+   CSS Custom Properties for theme switching
+   ================================================================ */
+:root {
+  --bg: #0a0a0b;
+  --surface: #141416;
+  --surface-elevated: #1c1c1f;
+  --fg: #ededec;
+  --fg-secondary: #8b8b8b;
+  --fg-muted: #5a5a5a;
+  --border: #262628;
+  --border-subtle: #1e1e20;
+  --accent: #5b8dce;
+  --accent-muted: rgba(91, 141, 206, 0.12);
+  --accent-hover: #6e9dd6;
+  --destructive: #e5534b;
+  --success: #57ab5a;
+  --warning: #c69026;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --surface-elevated: #f5f5f4;
+  --fg: #1a1a1a;
+  --fg-secondary: #6b6b6b;
+  --fg-muted: #9a9a9a;
+  --border: #e5e5e3;
+  --border-subtle: #eeeeec;
+  --accent: #4a7ab5;
+  --accent-muted: rgba(74, 122, 181, 0.1);
+  --accent-hover: #3d6a9e;
+  --destructive: #d1242f;
+  --success: #1a7f37;
+  --warning: #9a6700;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ================================================================
+   Base Styles
+   ================================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  line-height: 1.7;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* ================================================================
+   Typography
+   ================================================================ */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+h3 {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+}
+
+/* ================================================================
+   Skip to Content
+   ================================================================ */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 100;
+  padding: 1rem 1.5rem;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ================================================================
+   Scrollbar
+   ================================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-muted);
+}
+
+/* ================================================================
+   Focus States
+   ================================================================ */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ================================================================
+   Prose (Field Notes, Crash Reports, Case Studies)
+   ================================================================ */
+.prose {
+  max-width: 65ch;
+  line-height: 1.8;
+  color: var(--fg);
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--fg);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+}
+
+.prose p {
+  margin-bottom: 1.25em;
+  color: var(--fg-secondary);
+}
+
+.prose strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.prose a:hover {
+  color: var(--accent-hover);
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+  color: var(--fg-secondary);
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25em;
+  margin: 1.5em 0;
+  color: var(--fg-secondary);
+  font-style: italic;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--accent);
+}
+
+.prose pre {
+  background: var(--surface) !important;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25em;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--fg);
+  font-size: inherit;
+}
+
+.prose img {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  margin: 1.5em 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.9rem;
+}
+
+.prose th, .prose td {
+  padding: 0.75em 1em;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--surface-elevated);
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.prose td {
+  color: var(--fg-secondary);
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2em 0;
+}
+
+/* ================================================================
+   Animations
+   ================================================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ================================================================
+   Command Palette Overlay
+   ================================================================ */
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+}
+
+[cmdk-dialog] {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 560px;
+  width: calc(100% - 2rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  overflow: hidden;
+}
+
+[cmdk-input] {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+[cmdk-input]::placeholder {
+  color: var(--fg-muted);
+}
+
+[cmdk-list] {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+[cmdk-item] {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--fg-secondary);
+  font-size: 0.9rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+[cmdk-item][data-selected="true"] {
+  background: var(--accent-muted);
+  color: var(--fg);
+}
+
+[cmdk-item]:hover {
+  background: var(--surface-elevated);
+}
+
+[cmdk-group-heading] {
+  padding: 0.5rem 0.75rem 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+}
+
+[cmdk-empty] {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: var(--fg-muted);
+  font-size: 0.9rem;
+}
+
+/* ================================================================
+   Reading Progress Bar
+   ================================================================ */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 60;
+  transition: width 0.1s linear;
+}
