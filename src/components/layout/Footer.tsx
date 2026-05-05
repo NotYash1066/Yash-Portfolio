@@ -5,8 +5,8 @@ export function Footer() {
   return (
     <footer
       style={{
-        borderTop: "1px solid var(--border)",
-        padding: "3rem 1.5rem",
+        borderTop: `${2}px solid var(--border)`,
+        padding: "3rem 1rem",
         marginTop: "6rem",
       }}
     >
@@ -22,10 +22,8 @@ export function Footer() {
         {/* Top row */}
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            flexWrap: "wrap",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
             gap: "2rem",
           }}
         >
@@ -37,7 +35,9 @@ export function Footer() {
                 fontSize: "0.8rem",
                 color: "var(--fg)",
                 marginBottom: "0.5rem",
-                fontWeight: 500,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
               }}
             >
               {profile.name}
@@ -69,15 +69,15 @@ export function Footer() {
                   color: "var(--fg-muted)",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  fontWeight: 600,
+                  fontWeight: 700,
                 }}
               >
                 Navigate
               </span>
               {[
                 { href: "/work", label: "Work" },
-                { href: "/field-notes", label: "Field Notes" },
-                { href: "/crash-reports", label: "Crash Reports" },
+                { href: "/writing", label: "Writing" },
+                { href: "/lessons", label: "Lessons" },
                 { href: "/now", label: "Now" },
                 { href: "/about", label: "About" },
               ].map((link) => (
@@ -89,6 +89,8 @@ export function Footer() {
                     color: "var(--fg-secondary)",
                     textDecoration: "none",
                     transition: "color 0.2s",
+                    fontFamily: "var(--font-mono)",
+                    fontWeight: 600,
                   }}
                 >
                   {link.label}
@@ -104,7 +106,7 @@ export function Footer() {
                   color: "var(--fg-muted)",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  fontWeight: 600,
+                  fontWeight: 700,
                 }}
               >
                 Connect
@@ -113,7 +115,7 @@ export function Footer() {
                 href={profile.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none" }}
+                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
               >
                 GitHub ↗
               </a>
@@ -121,19 +123,19 @@ export function Footer() {
                 href={profile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none" }}
+                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
               >
                 LinkedIn ↗
               </a>
               <a
                 href={`mailto:${profile.email}`}
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none" }}
+                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
               >
                 Email
               </a>
               <Link
                 href="/resume"
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none" }}
+                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
               >
                 Resume
               </Link>
@@ -144,7 +146,7 @@ export function Footer() {
         {/* Bottom */}
         <div
           style={{
-            borderTop: "1px solid var(--border)",
+            borderTop: `${2}px solid var(--border)`,
             paddingTop: "1.5rem",
             display: "flex",
             justifyContent: "space-between",
@@ -158,6 +160,7 @@ export function Footer() {
               fontFamily: "var(--font-mono)",
               fontSize: "0.7rem",
               color: "var(--fg-muted)",
+              fontWeight: 700,
             }}
           >
             © {new Date().getFullYear()} {profile.name}
@@ -167,6 +170,9 @@ export function Footer() {
               fontFamily: "var(--font-mono)",
               fontSize: "0.7rem",
               color: "var(--fg-muted)",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.05em",
             }}
           >
             Living Engineering Archive
