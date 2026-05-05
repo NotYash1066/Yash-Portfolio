@@ -20,8 +20,9 @@
   --color-success: #00FF41;
   --color-warning: #FFE500;
 
-  --font-display: var(--font-syne), sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-anton), sans-serif;
+  --font-sans: var(--font-outfit), sans-serif;
+  --font-serif: var(--font-cormorant), serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   
   --shadow-brutal: 4px 4px 0 var(--accent);
@@ -42,15 +43,15 @@
   --fg-muted: #6b6b6b;
   --border: #f0ede6;
   --border-subtle: #2a2a2a;
-  --accent: #FFE500;
-  --accent-rgb: 255, 229, 0;
+  --accent: #FF0000;
+  --accent-rgb: 255, 0, 0;
   --accent-muted: rgba(255, 229, 0, 0.15);
   --accent-hover: #FFD700;
   --destructive: #FF3B00;
   --success: #00FF41;
   --warning: #FFE500;
-  --shadow: var(--shadow-brutal);
-  --shadow-lg: var(--shadow-brutal-lg);
+  --shadow: 4px 4px 0 #FF0000;
+  --shadow-lg: 6px 6px 0 #FF0000;
 }
 
 [data-theme="light"] {
@@ -62,15 +63,15 @@
   --fg-muted: #7a7a7a;
   --border: #0c0c0c;
   --border-subtle: #d0d0d0;
-  --accent: #FF3B00;
+  --accent: #CC0000;
   --accent-rgb: 255, 59, 0;
   --accent-muted: rgba(255, 59, 0, 0.1);
   --accent-hover: #E63500;
   --destructive: #FF3B00;
   --success: #00AA2E;
   --warning: #FF8C00;
-  --shadow: 4px 4px 0 #0c0c0c;
-  --shadow-lg: 6px 6px 0 #0c0c0c;
+  --shadow: 4px 4px 0 #CC0000;
+  --shadow-lg: 6px 6px 0 #CC0000;
 }
 
 /* ================================================================
@@ -772,4 +773,14 @@ h3 {
   background: var(--accent);
   z-index: 60;
   transition: width 0.1s linear;
+}
+
+/* ================================================================
+   Section Heading (Cormorant Garamond italic)
+   ================================================================ */
+.section-heading {
+  font-family: var(--font-cormorant), serif !important;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.02em;
 }

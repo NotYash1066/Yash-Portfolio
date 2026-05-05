@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { profile } from "@/config/profile";
-import { PunchCard } from "@/components/content/PunchCard";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
 export const metadata: Metadata = {
@@ -67,13 +66,6 @@ export default function AboutPage() {
         <p style={{ fontSize: "1rem", color: "var(--fg-secondary)", lineHeight: 1.8 }}>
           I write to document the messy middle of learning — the bugs, the failed assumptions, the things that clicked on the third try. This portfolio is that documentation system.
         </p>
-      </section>
-      </ScrollReveal>
-
-      {/* Punch Card */}
-      <ScrollReveal delay={100}>
-      <section style={{ marginBottom: "3rem" }}>
-        <PunchCard />
       </section>
       </ScrollReveal>
 
