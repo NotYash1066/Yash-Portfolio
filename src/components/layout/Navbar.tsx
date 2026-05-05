@@ -7,181 +7,115 @@ import { ThemeToggle } from "@/components/navigation/ThemeToggle";
 import { profile } from "@/config/profile";
 
 const navLinks = [
-  { href: "/", label: "Index" },
   { href: "/work", label: "Work" },
-  { href: "/field-notes", label: "Field Notes" },
-  { href: "/crash-reports", label: "Crash Reports" },
+  { href: "/field-notes", label: "Writing" },
+  { href: "/crash-reports", label: "Lessons" },
   { href: "/now", label: "Now" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+  });
+
   return (
-    <>
-      <nav
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 50,
-          borderBottom: "1px solid var(--border)",
-          background: "var(--bg)",
-          backdropFilter: "blur(12px)",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "0 1.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: "60px",
-          }}
-        >
-          {/* Logo / Name */}
-          <Link
-            href="/"
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.8rem",
-              color: "var(--fg)",
-              textDecoration: "none",
-              fontWeight: 500,
-              letterSpacing: "0.02em",
-            }}
-          >
-            {profile.name.split(" ")[0].toLowerCase()}_
+    <header className="masthead">
+      <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1.5rem" }}>
+        {/* Meta bar */}
+        <div className="masthead-meta">
+          <span>{today}</span>
+          <span className="desktop-only">{profile.university} · {profile.location}</span>
+          <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span className="live-dot" />
+            Open to Internships
+          </span>
+        </div>
+
+        {/* Main masthead row */}
+        <div className="masthead-main">
+          <Link href="/" className="masthead-title glitch">
+            {profile.name.split(" ")[0].toLowerCase()}_archive
           </Link>
 
-          {/* Desktop Nav */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "2rem",
-            }}
-            className="desktop-nav"
-          >
+          {/* Desktop nav */}
+          <nav className="masthead-nav" aria-label="Main navigation">
             {navLinks.map((link) => {
-              const isActive =
-                link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href);
+              const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  style={{
-                    fontSize: "0.825rem",
-                    color: isActive ? "var(--fg)" : "var(--fg-secondary)",
-                    textDecoration: "none",
-                    transition: "color 0.2s",
-                    fontWeight: isActive ? 500 : 400,
-                  }}
+                  className={`masthead-nav-link${isActive ? " active" : ""}`}
                 >
                   {link.label}
                 </Link>
               );
             })}
-          </div>
+          </nav>
 
-          {/* Right section */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            {/* Cmd+K hint */}
             <button
-              onClick={() =>
-                document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))
-              }
+              onClick={() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
+              className="desktop-only"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
+                display: "flex", alignItems: "center", gap: "0.4rem",
                 padding: "0.375rem 0.75rem",
-                borderRadius: "6px",
-                border: "1px solid var(--border)",
-                background: "transparent",
-                color: "var(--fg-muted)",
-                fontSize: "0.75rem",
-                cursor: "pointer",
-                fontFamily: "var(--font-mono)",
+                border: "1px solid var(--border)", background: "transparent",
+                color: "var(--fg-muted)", fontSize: "0.7rem", cursor: "pointer",
+                fontFamily: "var(--font-mono)", fontWeight: 700,
               }}
-              className="cmd-k-hint"
               aria-label="Open command palette"
             >
-              <span>⌘K</span>
+              ⌘K
             </button>
 
             <ThemeToggle />
 
-            {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="mobile-menu-btn"
-              aria-label="Toggle navigation menu"
+              aria-label="Toggle menu"
               style={{
-                display: "none",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "36px",
-                height: "36px",
-                borderRadius: "6px",
-                border: "1px solid var(--border)",
-                background: "transparent",
-                color: "var(--fg-secondary)",
-                cursor: "pointer",
+                display: "none", alignItems: "center", justifyContent: "center",
+                width: "36px", height: "36px",
+                border: "2px solid var(--border)", background: "transparent",
+                color: "var(--fg)", cursor: "pointer",
               }}
             >
               {mobileOpen ? (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4l8 8M12 4l-8 8" />
                 </svg>
               ) : (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M2 4h12M2 8h12M2 12h12" />
                 </svg>
               )}
             </button>
           </div>
         </div>
-      </nav>
+      </div>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile nav */}
       {mobileOpen && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            top: "60px",
-            zIndex: 40,
-            background: "var(--bg)",
-            padding: "2rem 1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.5rem",
-          }}
+        <nav
+          className="masthead-nav open"
+          aria-label="Mobile navigation"
+          style={{ padding: "0 1.5rem" }}
         >
           {navLinks.map((link) => {
-            const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
+            const isActive = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
                 href={link.href}
+                className={`masthead-nav-link${isActive ? " active" : ""}`}
                 onClick={() => setMobileOpen(false)}
-                style={{
-                  fontSize: "1.25rem",
-                  color: isActive ? "var(--fg)" : "var(--fg-secondary)",
-                  textDecoration: "none",
-                  fontWeight: isActive ? 500 : 400,
-                  paddingBottom: "1rem",
-                  borderBottom: "1px solid var(--border)",
-                }}
               >
                 {link.label}
               </Link>
@@ -189,31 +123,14 @@ export function Navbar() {
           })}
           <Link
             href="/resume"
+            className="masthead-nav-link"
             onClick={() => setMobileOpen(false)}
-            style={{
-              fontSize: "1.25rem",
-              color: "var(--accent)",
-              textDecoration: "none",
-            }}
+            style={{ color: "var(--accent)" }}
           >
             Resume ↗
           </Link>
-        </div>
+        </nav>
       )}
-
-      <style jsx>{`
-        @media (max-width: 768px) {
-          .desktop-nav {
-            display: none !important;
-          }
-          .mobile-menu-btn {
-            display: flex !important;
-          }
-          .cmd-k-hint {
-            display: none !important;
-          }
-        }
-      `}</style>
-    </>
+    </header>
   );
 }

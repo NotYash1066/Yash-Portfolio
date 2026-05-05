@@ -17,12 +17,11 @@ export function ThemeToggle() {
         justifyContent: "center",
         width: "36px",
         height: "36px",
-        borderRadius: "6px",
-        border: "1px solid var(--border)",
+        border: "2px solid var(--border)",
         background: "transparent",
-        color: "var(--fg-secondary)",
+        color: "var(--fg)",
         cursor: "pointer",
-        transition: "all 0.2s ease",
+        transition: "background 0.2s, color 0.2s",
       }}
     >
       {theme === "dark" ? (

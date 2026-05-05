@@ -30,7 +30,7 @@ function isTheme(value: string | null): value is Theme {
 }
 
 function getPreferredTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+  if (typeof window === "undefined") return "light";
 
   const saved = localStorage.getItem(THEME_STORAGE_KEY);
   if (isTheme(saved)) return saved;
@@ -54,7 +54,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useSyncExternalStore<Theme>(
     subscribeToThemeChanges,
     getPreferredTheme,
-    () => "dark"
+    () => "light"
   );
 
   useEffect(() => {

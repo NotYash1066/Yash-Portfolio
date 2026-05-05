@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
+import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,8 +7,17 @@ import { ThemeProvider } from "@/components/navigation/ThemeProvider";
 import { CommandPalette } from "@/components/navigation/CommandPalette";
 import { profile } from "@/config/profile";
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
 const inter = Inter({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   variable: "--font-inter",
   display: "swap",
 });
@@ -16,14 +25,6 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -45,22 +46,17 @@ export const metadata: Metadata = {
     title: `${profile.name} — Living Engineering Archive`,
     description: profile.heroDescription,
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} antialiased`}
-        style={{ fontFamily: "var(--font-inter), var(--font-sans)" }}
+        className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        style={{ fontFamily: "var(--font-inter), sans-serif" }}
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-to-content">
