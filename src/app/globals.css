@@ -20,13 +20,13 @@
   --color-success: #00FF41;
   --color-warning: #FFE500;
 
-  --font-display: var(--font-syne), sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-dm-serif), serif;
+  --font-sans: var(--font-dm-sans), sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
   
-  --shadow-brutal: 4px 4px 0 var(--accent);
-  --shadow-brutal-sm: 2px 2px 0 var(--accent);
-  --shadow-brutal-lg: 6px 6px 0 var(--accent);
+  --shadow-brutal: 4px 4px 0 #00FF41;
+  --shadow-brutal-sm: 2px 2px 0 #00FF41;
+  --shadow-brutal-lg: 6px 6px 0 #00FF41;
   --border-width: 2px;
 }
 
@@ -34,23 +34,23 @@
    CSS Custom Properties for theme switching
    ================================================================ */
 :root {
-  --bg: #0c0c0c;
-  --surface: #0c0c0c;
-  --surface-elevated: #1a1a1a;
-  --fg: #f0ede6;
-  --fg-secondary: #a8a8a8;
-  --fg-muted: #6b6b6b;
-  --border: #f0ede6;
-  --border-subtle: #2a2a2a;
-  --accent: #FFE500;
-  --accent-rgb: 255, 229, 0;
-  --accent-muted: rgba(255, 229, 0, 0.15);
-  --accent-hover: #FFD700;
+  --bg: #0a0f0a;
+  --surface: #0a0f0a;
+  --surface-elevated: #111811;
+  --fg: #e8f5e8;
+  --fg-secondary: #8ab88a;
+  --fg-muted: #4a6b4a;
+  --border: #00FF41;
+  --border-subtle: #1a2a1a;
+  --accent: #00FF41;
+  --accent-rgb: 0, 255, 65;
+  --accent-muted: rgba(0, 255, 65, 0.12);
+  --accent-hover: #00CC33;
   --destructive: #FF3B00;
   --success: #00FF41;
   --warning: #FFE500;
-  --shadow: var(--shadow-brutal);
-  --shadow-lg: var(--shadow-brutal-lg);
+  --shadow: 4px 4px 0 #00FF41;
+  --shadow-lg: 6px 6px 0 #00FF41;
 }
 
 [data-theme="light"] {
@@ -60,17 +60,17 @@
   --fg: #0c0c0c;
   --fg-secondary: #4a4a4a;
   --fg-muted: #7a7a7a;
-  --border: #0c0c0c;
+  --border: #1a1a1a;
   --border-subtle: #d0d0d0;
-  --accent: #FF3B00;
-  --accent-rgb: 255, 59, 0;
-  --accent-muted: rgba(255, 59, 0, 0.1);
-  --accent-hover: #E63500;
+  --accent: #006400;
+  --accent-rgb: 0, 100, 0;
+  --accent-muted: rgba(0, 100, 0, 0.1);
+  --accent-hover: #004d00;
   --destructive: #FF3B00;
   --success: #00AA2E;
   --warning: #FF8C00;
-  --shadow: 4px 4px 0 #0c0c0c;
-  --shadow-lg: 6px 6px 0 #0c0c0c;
+  --shadow: 4px 4px 0 #006400;
+  --shadow-lg: 6px 6px 0 #006400;
 }
 
 /* ================================================================
@@ -385,6 +385,16 @@ h3 {
 .stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
 .stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
 .stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* ================================================================
+   Hacker Editorial — Hero mono override
+   ================================================================ */
+.hero-name {
+  font-family: var(--font-mono) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700 !important;
+}
 
 /* ================================================================
    Scroll Reveal

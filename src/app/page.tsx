@@ -31,7 +31,7 @@ export default function HomePage() {
           <ScrollReveal>
           <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
           <h1
-            className="glitch"
+            className="glitch hero-name"
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(3rem, 10vw, 6rem)",
