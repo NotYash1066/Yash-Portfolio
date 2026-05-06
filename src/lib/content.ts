@@ -67,6 +67,12 @@ export function getProjectReadme(slug: string): string | null {
   return fs.readFileSync(readmePath, "utf-8");
 }
 
+export function getProjectArchitecture(slug: string): string | null {
+  const architecturePath = path.join(contentDir, "projects", slug, "architecture.mmd");
+  if (!fs.existsSync(architecturePath)) return null;
+  return fs.readFileSync(architecturePath, "utf-8");
+}
+
 /* ================================================================
    Writing (formerly Field Notes)
    ================================================================ */

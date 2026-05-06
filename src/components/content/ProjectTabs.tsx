@@ -3,15 +3,18 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { MermaidDiagram } from "./MermaidDiagram";
 
 export function ProjectTabs({
   caseStudy,
+  architecture,
   readme,
 }: {
   caseStudy: string;
+  architecture: string | null;
   readme: string | null;
 }) {
-  const [activeTab, setActiveTab] = useState<"case-study" | "readme">("case-study");
+  const [activeTab, setActiveTab] = useState<"case-study" | "architecture" | "readme">("case-study");
 
   return (
     <div>
@@ -45,6 +48,28 @@ export function ProjectTabs({
           }}
         >
           Case Study
+        </button>
+        <button
+          onClick={() => setActiveTab("architecture")}
+          style={{
+            padding: "0.75rem 1.5rem",
+            background: "transparent",
+            border: "none",
+            borderBottom: activeTab === "architecture"
+              ? "2px solid var(--accent)"
+              : "2px solid transparent",
+            color:
+              activeTab === "architecture"
+                ? "var(--fg)"
+                : "var(--fg-secondary)",
+            fontSize: "0.875rem",
+            fontWeight: activeTab === "architecture" ? 500 : 400,
+            cursor: "pointer",
+            transition: "all 0.2s",
+            fontFamily: "var(--font-sans)",
+          }}
+        >
+          Architecture
         </button>
         <button
           onClick={() => setActiveTab("readme")}
@@ -82,6 +107,37 @@ export function ProjectTabs({
               No case study has been written for this project yet.
             </p>
           )}
+        </div>
+      )}
+
+      {activeTab === "architecture" && (
+        <div style={{ maxWidth: "100%" }}>
+          <div style={{ maxWidth: "750px", marginBottom: "1.5rem" }}>
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.65rem",
+                color: "var(--accent)",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                fontWeight: 700,
+                display: "block",
+                marginBottom: "0.75rem",
+              }}
+            >
+              System Architecture
+            </span>
+            <p
+              style={{
+                color: "var(--fg-secondary)",
+                fontSize: "0.9rem",
+                lineHeight: 1.7,
+              }}
+            >
+              A README-derived map of the major clients, services, data stores, and integration paths in this project.
+            </p>
+          </div>
+          <MermaidDiagram code={architecture || ""} />
         </div>
       )}
 

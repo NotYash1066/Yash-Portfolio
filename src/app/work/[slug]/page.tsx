@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   getProjectBySlug,
+  getProjectArchitecture,
   getProjectReadme,
   getAllProjects,
   getRelatedFieldNotes,
@@ -40,6 +41,7 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   const readme = getProjectReadme(slug);
+  const architecture = getProjectArchitecture(slug);
   const relatedNotes = await getRelatedFieldNotes(slug);
   const relatedReports = await getRelatedCrashReports(slug);
 
@@ -221,6 +223,7 @@ export default async function ProjectPage({
       {/* Tabs: Case Study / README */}
       <ProjectTabs
         caseStudy={project.content || ""}
+        architecture={architecture}
         readme={readme}
       />
 
