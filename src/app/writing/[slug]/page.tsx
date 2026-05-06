@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import {
   getFieldNoteBySlug,
@@ -10,7 +11,7 @@ import {
 } from "@/lib/content";
 
 export async function generateStaticParams() {
-  const notes = getAllFieldNotes();
+  const notes = await getAllFieldNotes();
   return notes.map((n) => ({ slug: n.slug }));
 }
 
@@ -20,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const note = getFieldNoteBySlug(slug);
+  const note = await getFieldNoteBySlug(slug);
   if (!note) return {};
   return {
     title: note.title,
@@ -34,11 +35,11 @@ export default async function FieldNotePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const note = getFieldNoteBySlug(slug);
+  const note = await getFieldNoteBySlug(slug);
 
   if (!note) notFound();
 
-  const { previous, next } = getAdjacentFieldNotes(slug);
+  const { previous, next } = await getAdjacentFieldNotes(slug);
 
   return (
     <div
@@ -51,7 +52,7 @@ export default async function FieldNotePage({
     >
       {/* Back link */}
       <Link
-        href="/field-notes"
+        href="/writing"
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.75rem",
@@ -61,7 +62,7 @@ export default async function FieldNotePage({
           marginBottom: "2rem",
         }}
       >
-        ← Back to Field Notes
+        ← Back to Writing
       </Link>
 
       {/* Header */}
@@ -167,7 +168,7 @@ export default async function FieldNotePage({
 
       {/* Content */}
       <article className="prose">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
           {note.content}
         </ReactMarkdown>
       </article>
@@ -186,7 +187,7 @@ export default async function FieldNotePage({
       >
         {previous ? (
           <Link
-            href={`/field-notes/${previous.slug}`}
+            href={`/writing/${previous.slug}`}
             style={{
               textDecoration: "none",
               maxWidth: "45%",
@@ -217,7 +218,7 @@ export default async function FieldNotePage({
         )}
         {next ? (
           <Link
-            href={`/field-notes/${next.slug}`}
+            href={`/writing/${next.slug}`}
             style={{
               textDecoration: "none",
               textAlign: "right",

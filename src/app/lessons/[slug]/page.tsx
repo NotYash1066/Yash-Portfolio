@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import {
   getCrashReportBySlug,
@@ -10,7 +11,7 @@ import {
 } from "@/lib/content";
 
 export async function generateStaticParams() {
-  const reports = getAllCrashReports();
+  const reports = await getAllCrashReports();
   return reports.map((r) => ({ slug: r.slug }));
 }
 
@@ -20,7 +21,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const report = getCrashReportBySlug(slug);
+  const report = await getCrashReportBySlug(slug);
   if (!report) return {};
   return {
     title: `Crash Report — ${report.title}`,
@@ -34,13 +35,13 @@ export default async function CrashReportPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const report = getCrashReportBySlug(slug);
+  const report = await getCrashReportBySlug(slug);
 
   if (!report) notFound();
 
-  const allReports = getAllCrashReports();
+  const allReports = await getAllCrashReports();
   const reportIndex = allReports.findIndex((r) => r.slug === slug);
-  const { previous, next } = getAdjacentCrashReports(slug);
+  const { previous, next } = await getAdjacentCrashReports(slug);
 
   const severityColor = {
     Low: "var(--fg-muted)",
@@ -60,7 +61,7 @@ export default async function CrashReportPage({
     >
       {/* Back link */}
       <Link
-        href="/crash-reports"
+        href="/lessons"
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.75rem",
@@ -70,7 +71,7 @@ export default async function CrashReportPage({
           marginBottom: "2rem",
         }}
       >
-        ← Back to Crash Reports
+        ← Back to Lessons
       </Link>
 
       {/* Header */}
@@ -205,7 +206,7 @@ export default async function CrashReportPage({
 
       {/* Content */}
       <article className="prose">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
           {report.content}
         </ReactMarkdown>
       </article>
@@ -247,7 +248,7 @@ export default async function CrashReportPage({
       >
         {previous ? (
           <Link
-            href={`/crash-reports/${previous.slug}`}
+            href={`/lessons/${previous.slug}`}
             style={{ textDecoration: "none", maxWidth: "45%" }}
           >
             <span
@@ -270,7 +271,7 @@ export default async function CrashReportPage({
         )}
         {next ? (
           <Link
-            href={`/crash-reports/${next.slug}`}
+            href={`/lessons/${next.slug}`}
             style={{ textDecoration: "none", textAlign: "right", maxWidth: "45%" }}
           >
             <span

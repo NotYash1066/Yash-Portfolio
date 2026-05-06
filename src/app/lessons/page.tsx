@@ -1,15 +1,40 @@
 import type { Metadata } from "next";
 import { getAllCrashReports } from "@/lib/content";
+import {
+  filterCrashReports,
+  getCrashReportFilterOptions,
+  paginateItems,
+  parseListingFilters,
+  type ListingSearchParams,
+} from "@/lib/content-listing";
+import {
+  ContentListingControls,
+  PaginationControls,
+} from "@/components/content/ContentListingControls";
 import { CrashReportCard } from "@/components/content/CrashReportCard";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
+
+const LESSONS_PAGE_SIZE = 6;
 
 export const metadata: Metadata = {
   title: "Lessons",
   description: "Engineering maturity through mistakes — bugs, failed assumptions, and lessons.",
 };
 
-export default function LessonsPage() {
-  const reports = getAllCrashReports();
+export default async function LessonsPage({
+  searchParams,
+}: {
+  searchParams: Promise<ListingSearchParams>;
+}) {
+  const filters = parseListingFilters(await searchParams);
+  const reports = await getAllCrashReports();
+  const options = getCrashReportFilterOptions(reports);
+  const filteredReports = filterCrashReports(reports, filters);
+  const paginatedReports = paginateItems(
+    filteredReports,
+    filters.page,
+    LESSONS_PAGE_SIZE
+  );
 
   return (
     <div
@@ -62,20 +87,63 @@ export default function LessonsPage() {
       </div>
       </ScrollReveal>
 
+      <ScrollReveal delay={75}>
+        <ContentListingControls
+          basePath="/lessons"
+          currentType="Lesson"
+          filters={{ ...filters, page: 1 }}
+          filteredCount={filteredReports.length}
+          totalCount={reports.length}
+          pageLabel="reports"
+          searchPlaceholder="Search lessons"
+          selects={[
+            {
+              name: "severity",
+              label: "Severity",
+              value: filters.severity,
+              allLabel: "All severities",
+              options: options.severities,
+            },
+            {
+              name: "tag",
+              label: "Tag",
+              value: filters.tag,
+              allLabel: "All tags",
+              options: options.tags,
+            },
+          ]}
+        />
+      </ScrollReveal>
+
       {/* Reports */}
-      {reports.length > 0 ? (
+      {paginatedReports.items.length > 0 ? (
         <ScrollReveal delay={100}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
-            gap: "1.25rem",
-          }}
-        >
-          {reports.map((report, i) => (
-            <CrashReportCard key={report.slug} report={report} index={i} />
-          ))}
-        </div>
+          <>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
+                gap: "1.25rem",
+              }}
+            >
+              {paginatedReports.items.map((report, i) => (
+                <CrashReportCard
+                  key={report.slug}
+                  report={report}
+                  index={paginatedReports.startItem + i - 1}
+                />
+              ))}
+            </div>
+            <PaginationControls
+              basePath="/lessons"
+              filters={filters}
+              currentPage={paginatedReports.currentPage}
+              totalPages={paginatedReports.totalPages}
+              startItem={paginatedReports.startItem}
+              endItem={paginatedReports.endItem}
+              totalItems={paginatedReports.totalItems}
+            />
+          </>
         </ScrollReveal>
       ) : (
         <div
@@ -86,7 +154,7 @@ export default function LessonsPage() {
           }}
         >
           <p style={{ color: "var(--fg-muted)", fontSize: "0.9rem", fontFamily: "var(--font-mono)" }}>
-            No lessons published yet. Either nothing has broken, or I haven&apos;t documented it yet.
+            No lessons matched this view.
           </p>
         </div>
       )}

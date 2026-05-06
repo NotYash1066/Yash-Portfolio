@@ -8,10 +8,10 @@ import { StatusPanel } from "@/components/content/StatusPanel";
 import { StatsCards } from "@/components/content/StatsCards";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
-export default function HomePage() {
+export default async function HomePage() {
   const projects = getFeaturedProjects();
-  const fieldNotes = getAllFieldNotes().slice(0, 3);
-  const crashReports = getAllCrashReports().slice(0, 2);
+  const fieldNotes = (await getAllFieldNotes()).slice(0, 3);
+  const crashReports = (await getAllCrashReports()).slice(0, 2);
 
   return (
     <div style={{ minHeight: "100vh" }}>
