@@ -1,163 +1,86 @@
 import type { Metadata } from "next";
 import { getAllCrashReports } from "@/lib/content";
-import {
-  filterCrashReports,
-  getCrashReportFilterOptions,
-  paginateItems,
-  parseListingFilters,
-  type ListingSearchParams,
-} from "@/lib/content-listing";
-import {
-  ContentListingControls,
-  PaginationControls,
-} from "@/components/content/ContentListingControls";
 import { CrashReportCard } from "@/components/content/CrashReportCard";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
-
-const LESSONS_PAGE_SIZE = 6;
+import { ScrollReveal, TextReveal } from "@/components/layout/ScrollReveal";
 
 export const metadata: Metadata = {
-  title: "Lessons",
-  description: "Engineering maturity through mistakes — bugs, failed assumptions, and lessons.",
+  title: "Lessons & Crash Reports",
+  description: "A log of systems that broke, and the mental models they forced me to fix.",
 };
 
-export default async function LessonsPage({
-  searchParams,
-}: {
-  searchParams: Promise<ListingSearchParams>;
-}) {
-  const filters = parseListingFilters(await searchParams);
+export default async function LessonsPage() {
   const reports = await getAllCrashReports();
-  const options = getCrashReportFilterOptions(reports);
-  const filteredReports = filterCrashReports(reports, filters);
-  const paginatedReports = paginateItems(
-    filteredReports,
-    filters.page,
-    LESSONS_PAGE_SIZE
-  );
 
   return (
     <div
       style={{
-        maxWidth: "1200px",
+        maxWidth: "1400px",
         margin: "0 auto",
-        padding: "4rem 1rem",
-        minHeight: "80vh",
+        padding: "8rem 1.5rem 6rem",
+        minHeight: "100vh",
       }}
     >
       {/* Header */}
-      <ScrollReveal>
-      <div style={{ marginBottom: "3rem", maxWidth: "650px" }}>
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            color: "var(--accent)",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-            fontWeight: 700,
-            display: "block",
-            marginBottom: "0.75rem",
-          }}
-        >
-          Lessons
-        </span>
+      <div style={{ marginBottom: "5rem" }}>
+        <ScrollReveal duration={1}>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.75rem",
+              color: "var(--fg-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              display: "block",
+              marginBottom: "1.5rem",
+            }}
+          >
+            04 &mdash; Lessons
+          </span>
+        </ScrollReveal>
+
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(2rem, 4vw, 3rem)",
-            fontWeight: 800,
+            fontSize: "clamp(3rem, 8vw, 6rem)",
+            fontWeight: 400,
             color: "var(--fg)",
-            letterSpacing: "-0.03em",
-            lineHeight: 1.1,
-            marginBottom: "1rem",
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+            marginBottom: "2rem",
           }}
         >
-          What broke, and what it taught me
+          <TextReveal text="What broke, and what it taught me" delay={100} />
         </h1>
-        <p
-          style={{
-            fontSize: "0.95rem",
-            color: "var(--fg-secondary)",
-            lineHeight: 1.7,
-          }}
-        >
-          Bugs, failed assumptions, and production incidents — documented honestly. Every crash report follows the same structure: what happened, why it happened, how I fixed it, and what I&apos;ll do differently next time.
-        </p>
-      </div>
-      </ScrollReveal>
 
-      <ScrollReveal delay={75}>
-        <ContentListingControls
-          basePath="/lessons"
-          currentType="Lesson"
-          filters={{ ...filters, page: 1 }}
-          filteredCount={filteredReports.length}
-          totalCount={reports.length}
-          pageLabel="reports"
-          searchPlaceholder="Search lessons"
-          selects={[
-            {
-              name: "severity",
-              label: "Severity",
-              value: filters.severity,
-              allLabel: "All severities",
-              options: options.severities,
-            },
-            {
-              name: "tag",
-              label: "Tag",
-              value: filters.tag,
-              allLabel: "All tags",
-              options: options.tags,
-            },
-          ]}
-        />
-      </ScrollReveal>
-
-      {/* Reports */}
-      {paginatedReports.items.length > 0 ? (
-        <ScrollReveal delay={100}>
-          <>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
-                gap: "1.25rem",
-              }}
-            >
-              {paginatedReports.items.map((report, i) => (
-                <CrashReportCard
-                  key={report.slug}
-                  report={report}
-                  index={paginatedReports.startItem + i - 1}
-                />
-              ))}
-            </div>
-            <PaginationControls
-              basePath="/lessons"
-              filters={filters}
-              currentPage={paginatedReports.currentPage}
-              totalPages={paginatedReports.totalPages}
-              startItem={paginatedReports.startItem}
-              endItem={paginatedReports.endItem}
-              totalItems={paginatedReports.totalItems}
-            />
-          </>
-        </ScrollReveal>
-      ) : (
-        <div
-          style={{
-            padding: "4rem 2rem",
-            textAlign: "center",
-            border: "2px solid var(--border)",
-          }}
-        >
-          <p style={{ color: "var(--fg-muted)", fontSize: "0.9rem", fontFamily: "var(--font-mono)" }}>
-            No lessons matched this view.
+        <ScrollReveal delay={300} duration={1}>
+          <p
+            style={{
+              fontSize: "1.2rem",
+              color: "var(--fg-secondary)",
+              lineHeight: 1.6,
+              maxWidth: "700px",
+              fontWeight: 300,
+            }}
+          >
+            Bugs are not interruptions. They are the curriculum. Here are some of the most educational mistakes I&apos;ve made so far.
           </p>
-        </div>
-      )}
+        </ScrollReveal>
+      </div>
+
+      {/* Grid */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+          gap: "3rem",
+        }}
+      >
+        {reports.map((report, index) => (
+          <ScrollReveal key={report.slug} delay={index * 100}>
+            <CrashReportCard report={report} index={index} />
+          </ScrollReveal>
+        ))}
+      </div>
     </div>
   );
 }

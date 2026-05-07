@@ -1,126 +1,143 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import type { FieldNote } from "@/lib/types";
 
 export function FieldNoteCard({ note }: { note: FieldNote }) {
   return (
     <Link
       href={`/writing/${note.slug}`}
-      className="card"
-      style={{
-        display: "block",
-        padding: "1.5rem",
-        textDecoration: "none",
-      }}
+      style={{ textDecoration: "none", display: "block", height: "100%" }}
     >
-      {/* Top row */}
-      <div
+      <motion.div
+        whileHover="hover"
+        initial="initial"
         style={{
           display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          marginBottom: "0.75rem",
-          flexWrap: "wrap",
+          flexDirection: "column",
+          padding: "2rem",
+          background: "var(--surface)",
+          border: "1px solid var(--border)",
+          height: "100%",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            color: "var(--accent)",
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            fontWeight: 700,
+        <motion.div
+          variants={{
+            initial: { opacity: 0 },
+            hover: { opacity: 0.03 },
           }}
-        >
-          {note.category}
-        </span>
-        <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
-        <span
+          transition={{ duration: 0.3 }}
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            color: "var(--fg-muted)",
+            position: "absolute",
+            inset: 0,
+            background: "var(--fg)",
+            zIndex: 0,
           }}
-        >
-          {new Date(note.date).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          })}
-        </span>
-        <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            color: "var(--fg-muted)",
-          }}
-        >
-          {note.readingTime}
-        </span>
-      </div>
+        />
 
-      {/* Title */}
-      <h3
-        className="glitch"
-        style={{
-          fontSize: "1.125rem",
-          fontWeight: 700,
-          color: "var(--fg)",
-          marginBottom: "0.5rem",
-          letterSpacing: "-0.01em",
-          fontFamily: "var(--font-display)",
-        }}
-      >
-        {note.title}
-      </h3>
-
-      {/* Excerpt */}
-      <p
-        style={{
-          fontSize: "0.85rem",
-          color: "var(--fg-secondary)",
-          lineHeight: 1.6,
-          marginBottom: "1rem",
-        }}
-      >
-        {note.excerpt}
-      </p>
-
-      {/* Tags */}
-      <div style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap" }}>
-        {note.tags.map((tag) => (
-          <span
-            key={tag}
+        <div style={{ position: "relative", zIndex: 1, flexGrow: 1 }}>
+          <div
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.625rem",
-              padding: "0.2rem 0.5rem",
-              border: "1px solid var(--border)",
-              color: "var(--fg-muted)",
-              fontWeight: 600,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              marginBottom: "1.5rem",
             }}
           >
-            {tag}
-          </span>
-        ))}
-        {note.mood && (
-          <span
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.75rem",
+                color: "var(--fg)",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+              }}
+            >
+              {note.category}
+            </span>
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.75rem",
+                color: "var(--fg-muted)",
+              }}
+            >
+              {new Date(note.date).getFullYear()}
+            </span>
+          </div>
+
+          <motion.h3
+            variants={{
+              initial: { y: 0 },
+              hover: { y: -5 },
+            }}
+            transition={{ duration: 0.3 }}
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.625rem",
-              padding: "0.2rem 0.5rem",
-              background: "var(--accent)",
-              color: "var(--bg)",
-              fontWeight: 700,
+              fontSize: "1.5rem",
+              fontFamily: "var(--font-display)",
+              fontWeight: 400,
+              color: "var(--fg)",
+              margin: "0 0 1rem 0",
+              lineHeight: 1.2,
             }}
           >
-            {note.mood}
-          </span>
-        )}
-      </div>
+            {note.title}
+          </motion.h3>
+
+          <p
+            style={{
+              fontSize: "0.95rem",
+              color: "var(--fg-secondary)",
+              lineHeight: 1.6,
+              margin: 0,
+            }}
+          >
+            {note.excerpt}
+          </p>
+        </div>
+
+        <div
+          style={{
+            marginTop: "2rem",
+            position: "relative",
+            zIndex: 1,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            {note.tags.slice(0, 2).map((tag) => (
+              <span
+                key={tag}
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.65rem",
+                  padding: "0.2rem 0.5rem",
+                  border: "1px solid var(--border-subtle)",
+                  color: "var(--fg-muted)",
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          
+          <motion.span
+            variants={{
+              initial: { opacity: 0.5, x: -10 },
+              hover: { opacity: 1, x: 0 },
+            }}
+            transition={{ duration: 0.3 }}
+            style={{ color: "var(--fg)", fontSize: "1.2rem" }}
+          >
+            &#8594;
+          </motion.span>
+        </div>
+      </motion.div>
     </Link>
   );
 }

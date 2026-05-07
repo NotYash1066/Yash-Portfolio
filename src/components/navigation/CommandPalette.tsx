@@ -113,7 +113,6 @@ export function CommandPalette() {
                 { label: "Go to Lessons", path: "/lessons" },
                 { label: "Go to Now", path: "/now" },
                 { label: "Go to About", path: "/about" },
-                { label: "Go to Archive", path: "/archive" },
                 { label: "Go to Resume", path: "/resume" },
                 { label: "Go to Contact", path: "/contact" },
               ].map((item) => (

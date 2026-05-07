@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { profile } from "@/config/profile";
+import { ScrollReveal, TextReveal } from "@/components/layout/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Resume",
@@ -8,45 +9,61 @@ export const metadata: Metadata = {
 
 export default function ResumePage() {
   return (
-    <div style={{ maxWidth: "900px", margin: "0 auto", padding: "4rem 1.5rem", minHeight: "80vh" }}>
-      <div style={{ marginBottom: "3rem" }}>
-        <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, display: "block", marginBottom: "0.75rem" }}>Resume</span>
-        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 400, color: "var(--fg)", letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: "1rem" }}>Pick the version that fits your context</h1>
-        <p style={{ fontSize: "0.95rem", color: "var(--fg-secondary)", lineHeight: 1.7, marginBottom: "0.5rem" }}>I maintain different resume variants depending on the role. Each highlights different aspects of the same work.</p>
-        <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-muted)" }}>Last updated: {profile.resumeLastUpdated}</p>
+    <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "8rem 1.5rem 6rem", minHeight: "100vh" }}>
+      <div style={{ marginBottom: "5rem" }}>
+        <ScrollReveal duration={1}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.15em", display: "block", marginBottom: "1.5rem" }}>
+            05 &mdash; Resume
+          </span>
+        </ScrollReveal>
+
+        <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 400, color: "var(--fg)", letterSpacing: "-0.02em", lineHeight: 1, marginBottom: "2rem" }}>
+          <TextReveal text="Context matters." delay={100} />
+        </h1>
+
+        <ScrollReveal delay={300} duration={1}>
+          <p style={{ fontSize: "1.2rem", color: "var(--fg-secondary)", lineHeight: 1.6, marginBottom: "0.5rem", maxWidth: "600px", fontWeight: 300 }}>
+            I maintain different variants depending on the role. Pick the version that best fits your context.
+          </p>
+          <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+            Last updated &mdash; {profile.resumeLastUpdated}
+          </p>
+        </ScrollReveal>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 280px), 1fr))", gap: "1.25rem", marginBottom: "3rem" }}>
-        {profile.resumeVariants.map((v) => (
-          <div key={v.filename} style={{ padding: "1.5rem", border: "1px solid var(--border)", borderRadius: "6px", background: "var(--surface)", display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--fg)", marginBottom: "0.375rem" }}>{v.label}</h3>
-              <p style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", lineHeight: 1.5 }}>{v.description}</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "5rem" }}>
+        {profile.resumeVariants.map((v, i) => (
+          <ScrollReveal key={v.filename} delay={i * 100}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "baseline", paddingBottom: "2rem", borderBottom: "1px solid var(--border-subtle)", gap: "2rem" }}>
+              <div style={{ maxWidth: "500px" }}>
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 400, color: "var(--fg)", fontFamily: "var(--font-display)", marginBottom: "0.5rem" }}>{v.label}</h3>
+                <p style={{ fontSize: "1rem", color: "var(--fg-secondary)", lineHeight: 1.6, fontWeight: 300 }}>{v.description}</p>
+              </div>
+              <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+                <a href={`/resumes/${v.filename}`} target="_blank" rel="noopener noreferrer" className="hover-underline-link" style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--fg)", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.05em" }}>View</a>
+                <a href={`/resumes/${v.filename}`} download className="hover-underline-link" style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem", color: "var(--fg-muted)", textDecoration: "none", textTransform: "uppercase", letterSpacing: "0.05em" }}>Download</a>
+              </div>
             </div>
-            <div style={{ display: "flex", gap: "0.75rem", marginTop: "auto" }}>
-              <a href={`/resumes/${v.filename}`} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--accent)", textDecoration: "none" }}>View ↗</a>
-              <a href={`/resumes/${v.filename}`} download style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-secondary)", textDecoration: "none" }}>Download ↓</a>
-            </div>
-          </div>
+          </ScrollReveal>
         ))}
       </div>
 
-      <div style={{ padding: "1.5rem", border: "1px solid var(--border)", borderRadius: "6px", background: "var(--surface)" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1.25rem" }}>
+      <ScrollReveal delay={300}>
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", paddingTop: "2rem", borderTop: "1px solid var(--border-subtle)", gap: "3rem" }}>
           <div>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: "0.25rem" }}>Open To</span>
-            <p style={{ fontSize: "0.85rem", color: "var(--fg-secondary)" }}>{profile.openTo.join(", ")}</p>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "1rem" }}>Open To</span>
+            <p style={{ fontSize: "1rem", color: "var(--fg-secondary)", fontWeight: 300 }}>{profile.openTo.join("  \u2014  ")}</p>
           </div>
           <div>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.6rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.08em", display: "block", marginBottom: "0.25rem" }}>Contact</span>
-            <div style={{ display: "flex", gap: "1rem" }}>
-              <a href={`mailto:${profile.email}`} style={{ fontSize: "0.85rem", color: "var(--accent)", textDecoration: "none" }}>Email</a>
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.85rem", color: "var(--accent)", textDecoration: "none" }}>GitHub ↗</a>
-              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.85rem", color: "var(--accent)", textDecoration: "none" }}>LinkedIn ↗</a>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "1rem" }}>Contact</span>
+            <div style={{ display: "flex", gap: "1.5rem" }}>
+              <a href={`mailto:${profile.email}`} style={{ fontSize: "1rem", color: "var(--fg)", textDecoration: "none", fontWeight: 300 }}>Email</a>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" style={{ fontSize: "1rem", color: "var(--fg)", textDecoration: "none", fontWeight: 300 }}>GitHub</a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" style={{ fontSize: "1rem", color: "var(--fg)", textDecoration: "none", fontWeight: 300 }}>LinkedIn</a>
             </div>
           </div>
         </div>
-      </div>
+      </ScrollReveal>
     </div>
   );
 }

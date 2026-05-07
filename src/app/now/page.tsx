@@ -1,118 +1,164 @@
 import type { Metadata } from "next";
 import { profile } from "@/config/profile";
-import { getNowPageContent } from "@/lib/content";
-import ReactMarkdown from "react-markdown";
+import { ScrollReveal, TextReveal } from "@/components/layout/ScrollReveal";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
 export const metadata: Metadata = {
   title: "Now",
-  description: "What I'm currently building, learning, reading, and struggling with.",
+  description: "What I'm doing right now.",
 };
 
 export default function NowPage() {
-  const nowContent = getNowPageContent();
-
-  const sections = [
-    { label: "Currently building", value: profile.currentBuilding.join(", ") },
-    { label: "Currently learning", value: profile.currentLearning.join(", ") },
-    { label: "Currently reading", value: profile.currentReading },
-    { label: "Current focus", value: profile.currentFocus },
-    { label: "Current obsession", value: profile.currentObsession },
-    { label: "Currently struggling with", value: profile.currentStruggle },
-    { label: "Currently improving", value: profile.currentImproving },
-    { label: "Next milestone", value: profile.nextMilestone },
-  ];
+  const contentPath = path.join(process.cwd(), "content/now/index.mdx");
+  let lastUpdated = "";
+  
+  if (fs.existsSync(contentPath)) {
+    const fileContent = fs.readFileSync(contentPath, "utf8");
+    const { data } = matter(fileContent);
+    if (data.date) {
+      lastUpdated = new Date(data.date).toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric"
+      });
+    }
+  }
 
   return (
     <div
       style={{
-        maxWidth: "750px",
+        maxWidth: "1000px",
         margin: "0 auto",
-        padding: "4rem 1.5rem",
-        minHeight: "80vh",
+        padding: "8rem 1.5rem 6rem",
+        minHeight: "100vh",
       }}
     >
-      {/* Header */}
-      <div style={{ marginBottom: "3rem" }}>
-        <span
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.65rem",
-            color: "var(--accent)",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-            fontWeight: 600,
-            display: "block",
-            marginBottom: "0.75rem",
-          }}
-        >
-          Now
-        </span>
+      <div style={{ marginBottom: "5rem" }}>
+        <ScrollReveal duration={1}>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.75rem",
+              color: "var(--fg-muted)",
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              display: "block",
+              marginBottom: "1.5rem",
+            }}
+          >
+            Now
+          </span>
+        </ScrollReveal>
+
         <h1
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(2rem, 4vw, 3rem)",
+            fontSize: "clamp(3rem, 8vw, 6rem)",
             fontWeight: 400,
             color: "var(--fg)",
-            letterSpacing: "-0.03em",
-            lineHeight: 1.1,
-            marginBottom: "1rem",
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+            marginBottom: "2rem",
           }}
         >
-          What I&apos;m focused on right now
+          <TextReveal text="What I'm focused on" delay={100} />
         </h1>
-        <p
-          style={{
-            fontSize: "0.85rem",
-            color: "var(--fg-muted)",
-            fontFamily: "var(--font-mono)",
-          }}
-        >
-          Last updated: {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
-        </p>
-      </div>
 
-      {/* Sections */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0" }}>
-        {sections.map((section) => (
-          <div
-            key={section.label}
+        <ScrollReveal delay={300} duration={1}>
+          <p
             style={{
-              padding: "1.5rem 0",
-              borderBottom: "1px solid var(--border)",
+              fontSize: "1.2rem",
+              color: "var(--fg-secondary)",
+              lineHeight: 1.6,
+              maxWidth: "600px",
+              fontWeight: 300,
             }}
           >
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.65rem",
-                color: "var(--accent)",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                display: "block",
-                marginBottom: "0.5rem",
-              }}
-            >
-              {section.label}
-            </span>
-            <p
-              style={{
-                fontSize: "0.95rem",
-                color: "var(--fg-secondary)",
-                lineHeight: 1.7,
-              }}
-            >
-              {section.value}
+            A snapshot of my current priorities, reading list, and struggles.
+          </p>
+          {lastUpdated && (
+            <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.85rem", color: "var(--fg-muted)", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: "1rem" }}>
+              Last updated &mdash; {lastUpdated}
             </p>
-          </div>
-        ))}
+          )}
+        </ScrollReveal>
       </div>
 
-      {/* Additional MDX content */}
-      {nowContent && (
-        <div className="prose" style={{ marginTop: "3rem" }}>
-          <ReactMarkdown>{nowContent}</ReactMarkdown>
-        </div>
-      )}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "4rem" }}>
+        {/* Current Focus */}
+        <ScrollReveal delay={100}>
+          <section>
+            <SectionLabel>Current Focus</SectionLabel>
+            <p style={{ fontSize: "1.1rem", color: "var(--fg-secondary)", lineHeight: 1.8, fontWeight: 300 }}>{profile.currentFocus}</p>
+          </section>
+        </ScrollReveal>
+
+        {/* Learning */}
+        <ScrollReveal delay={200}>
+          <section>
+            <SectionLabel>Learning</SectionLabel>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {profile.currentLearning.map((item) => (
+                <div key={item} style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
+                  <span style={{ color: "var(--fg-muted)" }}>&mdash;</span>
+                  <span style={{ fontSize: "1rem", color: "var(--fg-secondary)", fontWeight: 300 }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
+
+        {/* Building */}
+        <ScrollReveal delay={300}>
+          <section>
+            <SectionLabel>Building</SectionLabel>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              {profile.currentBuilding.map((item) => (
+                <div key={item} style={{ display: "flex", alignItems: "baseline", gap: "1rem" }}>
+                  <span style={{ color: "var(--fg-muted)" }}>&mdash;</span>
+                  <span style={{ fontSize: "1rem", color: "var(--fg-secondary)", fontWeight: 300 }}>{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
+
+        {/* Reading */}
+        <ScrollReveal delay={400}>
+          <section>
+            <SectionLabel>Reading / Consuming</SectionLabel>
+            <p style={{ fontSize: "1.1rem", color: "var(--fg-secondary)", lineHeight: 1.8, fontWeight: 300 }}>{profile.currentReading}</p>
+          </section>
+        </ScrollReveal>
+
+        {/* Obsession */}
+        <ScrollReveal delay={500}>
+          <section>
+            <SectionLabel>Current Obsession</SectionLabel>
+            <p style={{ fontSize: "1.1rem", color: "var(--fg-secondary)", lineHeight: 1.8, fontWeight: 300 }}>{profile.currentObsession}</p>
+          </section>
+        </ScrollReveal>
+      </div>
     </div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h2
+      style={{
+        fontFamily: "var(--font-mono)",
+        fontSize: "0.8rem",
+        color: "var(--fg)",
+        textTransform: "uppercase",
+        letterSpacing: "0.15em",
+        marginBottom: "1.5rem",
+        paddingBottom: "0.5rem",
+        borderBottom: "1px solid var(--border-subtle)",
+      }}
+    >
+      {children}
+    </h2>
   );
 }

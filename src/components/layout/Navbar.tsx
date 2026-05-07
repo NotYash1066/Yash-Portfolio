@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/navigation/ThemeToggle";
 import { profile } from "@/config/profile";
 
@@ -18,42 +19,59 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
-      <nav
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          position: "sticky",
+          position: "fixed",
           top: 0,
+          left: 0,
+          right: 0,
           zIndex: 50,
-          borderBottom: `${2}px solid var(--border)`,
-          background: "var(--bg)",
+          background: scrolled ? "rgba(2, 2, 2, 0.8)" : "transparent",
+          backdropFilter: scrolled ? "blur(12px)" : "none",
+          borderBottom: scrolled ? "1px solid var(--border-subtle)" : "1px solid transparent",
+          transition: "background 0.3s, backdrop-filter 0.3s, border-color 0.3s",
         }}
       >
         <div
           style={{
-            maxWidth: "1200px",
+            maxWidth: "1400px",
             margin: "0 auto",
-            padding: "0 1rem",
+            padding: "0 1.5rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: "60px",
+            height: "80px",
           }}
         >
           {/* Logo / Name */}
           <Link
             href="/"
             style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.8rem",
+              fontFamily: "var(--font-display)",
+              fontSize: "1.5rem",
               color: "var(--fg)",
               textDecoration: "none",
-              fontWeight: 700,
-              letterSpacing: "0.02em",
+              fontWeight: 400,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
             }}
           >
-            {profile.name.split(" ")[0].toLowerCase()}_
+            {profile.name.split(" ")[0]}
           </Link>
 
           {/* Desktop Nav */}
@@ -61,7 +79,7 @@ export function Navbar() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "2rem",
+              gap: "2.5rem",
             }}
             className="desktop-nav"
           >
@@ -77,23 +95,37 @@ export function Navbar() {
                   style={{
                     color: isActive ? "var(--fg)" : "var(--fg-secondary)",
                     textDecoration: "none",
-                    transition: "color 0.2s",
-                    fontWeight: isActive ? 700 : 600,
-                    fontFamily: "var(--font-mono)",
+                    transition: "color 0.3s",
+                    fontWeight: 400,
+                    fontFamily: "var(--font-sans)",
                     textTransform: "uppercase",
-                    letterSpacing: "0.05em",
-                    fontSize: "0.7rem",
+                    letterSpacing: "0.1em",
+                    fontSize: "0.75rem",
+                    position: "relative",
                   }}
                   className={`nav-link${isActive ? " nav-link-active" : ""}`}
                 >
                   {link.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      style={{
+                        position: "absolute",
+                        bottom: "-4px",
+                        left: 0,
+                        right: 0,
+                        height: "1px",
+                        background: "var(--fg)",
+                      }}
+                    />
+                  )}
                 </Link>
               );
             })}
           </div>
 
           {/* Right section */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
             {/* Cmd+K hint */}
             <button
               onClick={() =>
@@ -102,20 +134,18 @@ export function Navbar() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.375rem 0.75rem",
-                border: `${2}px solid var(--border)`,
                 background: "transparent",
+                border: "none",
                 color: "var(--fg-muted)",
                 fontSize: "0.75rem",
                 cursor: "pointer",
                 fontFamily: "var(--font-mono)",
-                fontWeight: 700,
+                letterSpacing: "0.1em",
               }}
               className="cmd-k-hint"
               aria-label="Open command palette"
             >
-              <span>⌘K</span>
+              <span>SEARCH ⌘K</span>
             </button>
 
             <ThemeToggle />
@@ -129,86 +159,73 @@ export function Navbar() {
                 display: "none",
                 alignItems: "center",
                 justifyContent: "center",
-                width: "36px",
-                height: "36px",
-                border: `${2}px solid var(--border)`,
                 background: "transparent",
-                color: "var(--fg-secondary)",
+                border: "none",
+                color: "var(--fg)",
                 cursor: "pointer",
               }}
             >
               {mobileOpen ? (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M4 4l8 8M12 4l-8 8" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                  <path d="M6 6l12 12M18 6L6 18" />
                 </svg>
               ) : (
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M2 4h12M2 8h12M2 12h12" />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+                  <path d="M4 8h16M4 16h16" />
                 </svg>
               )}
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile Nav Overlay */}
       {mobileOpen && (
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
           style={{
             position: "fixed",
             inset: 0,
-            top: "60px",
+            top: "80px",
             zIndex: 40,
-            background: "var(--bg)",
-            padding: "2rem 1rem",
+            background: "rgba(2, 2, 2, 0.95)",
+            backdropFilter: "blur(20px)",
+            padding: "4rem 2rem",
             display: "flex",
             flexDirection: "column",
-            gap: "1.5rem",
-            borderTop: `${2}px solid var(--border)`,
+            gap: "2rem",
           }}
         >
-          {navLinks.map((link) => {
+          {navLinks.map((link, i) => {
             const isActive =
               link.href === "/"
                 ? pathname === "/"
                 : pathname.startsWith(link.href);
             return (
-              <Link
+              <motion.div
                 key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  fontSize: "1.25rem",
-                  color: isActive ? "var(--fg)" : "var(--fg-secondary)",
-                  textDecoration: "none",
-                  fontWeight: isActive ? 700 : 600,
-                  paddingBottom: "1rem",
-                  borderBottom: `${2}px solid var(--border)`,
-                  fontFamily: "var(--font-mono)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.05em",
-                }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.1 }}
               >
-                {link.label}
-              </Link>
+                <Link
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    fontSize: "3rem",
+                    fontFamily: "var(--font-display)",
+                    color: isActive ? "var(--fg)" : "var(--fg-secondary)",
+                    textDecoration: "none",
+                    fontWeight: 400,
+                  }}
+                >
+                  {link.label}
+                </Link>
+              </motion.div>
             );
           })}
-          <Link
-            href="/resume"
-            onClick={() => setMobileOpen(false)}
-            style={{
-              fontSize: "1.25rem",
-              color: "var(--accent)",
-              textDecoration: "none",
-              fontFamily: "var(--font-mono)",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
-            Resume ↗
-          </Link>
-        </div>
+        </motion.div>
       )}
 
       <style jsx>{`

@@ -5,140 +5,94 @@ export function Footer() {
   return (
     <footer
       style={{
-        borderTop: `${2}px solid var(--border)`,
-        padding: "3rem 1rem",
-        marginTop: "6rem",
+        borderTop: "1px solid var(--border-subtle)",
+        background: "var(--bg)",
+        padding: "4rem 0",
+        marginTop: "auto",
       }}
     >
       <div
         style={{
-          maxWidth: "1200px",
+          maxWidth: "1400px",
           margin: "0 auto",
+          padding: "0 1.5rem",
           display: "flex",
           flexDirection: "column",
-          gap: "2rem",
+          gap: "4rem",
         }}
       >
-        {/* Top row */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            flexWrap: "wrap",
             gap: "2rem",
           }}
         >
-          {/* Left */}
-          <div style={{ maxWidth: "400px" }}>
-            <p
+          {/* Brand */}
+          <div>
+            <Link
+              href="/"
               style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "0.8rem",
+                fontFamily: "var(--font-display)",
+                fontSize: "2rem",
                 color: "var(--fg)",
-                marginBottom: "0.5rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                textDecoration: "none",
+                fontWeight: 400,
+                display: "block",
+                marginBottom: "1rem",
               }}
             >
               {profile.name}
-            </p>
+            </Link>
             <p
               style={{
-                fontSize: "0.825rem",
                 color: "var(--fg-secondary)",
+                fontSize: "0.9rem",
+                maxWidth: "300px",
                 lineHeight: 1.6,
               }}
             >
-              {profile.footerLine}
+              {profile.heroSubtext}
             </p>
           </div>
 
-          {/* Right - Links */}
-          <div
-            style={{
-              display: "flex",
-              gap: "3rem",
-              flexWrap: "wrap",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          {/* Links */}
+          <div style={{ display: "flex", gap: "4rem", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.65rem",
+                  fontSize: "0.75rem",
                   color: "var(--fg-muted)",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  fontWeight: 700,
                 }}
               >
-                Navigate
+                Navigation
               </span>
-              {[
-                { href: "/work", label: "Work" },
-                { href: "/writing", label: "Writing" },
-                { href: "/lessons", label: "Lessons" },
-                { href: "/now", label: "Now" },
-                { href: "/about", label: "About" },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  style={{
-                    fontSize: "0.825rem",
-                    color: "var(--fg-secondary)",
-                    textDecoration: "none",
-                    transition: "color 0.2s",
-                    fontFamily: "var(--font-mono)",
-                    fontWeight: 600,
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link href="/work" style={linkStyle}>Work</Link>
+              <Link href="/writing" style={linkStyle}>Writing</Link>
+              <Link href="/lessons" style={linkStyle}>Lessons</Link>
+              <Link href="/now" style={linkStyle}>Now</Link>
             </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: "0.65rem",
+                  fontSize: "0.75rem",
                   color: "var(--fg-muted)",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
-                  fontWeight: 700,
                 }}
               >
                 Connect
               </span>
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
-              >
-                GitHub ↗
-              </a>
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
-              >
-                LinkedIn ↗
-              </a>
-              <a
-                href={`mailto:${profile.email}`}
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
-              >
-                Email
-              </a>
-              <Link
-                href="/resume"
-                style={{ fontSize: "0.825rem", color: "var(--fg-secondary)", textDecoration: "none", fontFamily: "var(--font-mono)", fontWeight: 600 }}
-              >
-                Resume
-              </Link>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" style={linkStyle}>GitHub</a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" style={linkStyle}>LinkedIn</a>
+              <a href={`mailto:${profile.email}`} style={linkStyle}>Email</a>
             </div>
           </div>
         </div>
@@ -146,39 +100,44 @@ export function Footer() {
         {/* Bottom */}
         <div
           style={{
-            borderTop: `${2}px solid var(--border)`,
-            paddingTop: "1.5rem",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            paddingTop: "2rem",
+            borderTop: "1px solid var(--border-subtle)",
             flexWrap: "wrap",
             gap: "1rem",
           }}
         >
-          <p
+          <span
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.7rem",
+              fontSize: "0.75rem",
               color: "var(--fg-muted)",
-              fontWeight: 700,
             }}
           >
-            © {new Date().getFullYear()} {profile.name}
-          </p>
-          <p
+            &copy; {new Date().getFullYear()} {profile.name}. All rights reserved.
+          </span>
+          <span
             style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "0.7rem",
+              fontSize: "0.75rem",
               color: "var(--fg-muted)",
-              fontWeight: 700,
               textTransform: "uppercase",
-              letterSpacing: "0.05em",
+              letterSpacing: "0.1em",
             }}
           >
-            Living Engineering Archive
-          </p>
+            Built with Next.js & Framer Motion
+          </span>
         </div>
       </div>
     </footer>
   );
 }
+
+const linkStyle = {
+  color: "var(--fg)",
+  textDecoration: "none",
+  fontSize: "0.9rem",
+  transition: "color 0.2s",
+};

@@ -77,8 +77,6 @@ export const profile = {
   beliefs: [
     "Good engineers write things down.",
     "Bugs are not interruptions. They are the curriculum.",
-    "Build the smallest honest version first.",
-    "Clarity over cleverness.",
     "Make the work easy to understand for the next person.",
     "Learn in public, but with taste.",
     "Every project should leave a trace.",
@@ -87,8 +85,8 @@ export const profile = {
 
   operatingPrinciples: [
     "Build the smallest honest version first.",
-    "Document while the confusion is still fresh.",
     "Prefer clarity over cleverness.",
+    "Document while the confusion is still fresh.",
     "Let projects expose weak spots.",
     "Finish before starting something new.",
     "If it works locally, it's not done.",
