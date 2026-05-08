@@ -59,6 +59,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${cormorant.variable} antialiased`}
+        suppressHydrationWarning
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-to-content">

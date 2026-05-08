@@ -29,16 +29,16 @@ export const profile = {
   resumeLastUpdated: "March 28, 2026",
 
   signatureLine:
-    "I build systems, document the process, and turn bugs into field notes.",
+    "I build robust systems, optimize backend performance, and write clear technical documentation.",
 
   heroDescription:
-    "Computer Engineering student building systems, studying the messy middle, and documenting the lessons bugs leave behind.",
+    "Computer Engineering student focused on building scalable backend systems, AI applications, and robust APIs.",
 
   heroSubtext:
-    "I'm in my third year of Computer Engineering at DDU, Nadiad. I build software, break assumptions, write field notes, and turn unfinished understanding into shipped projects.",
+    "Currently in my 3rd year of Computer Engineering at DDU, Nadiad. I specialize in backend development, system design, and building reliable production software.",
 
   currentFocus:
-    "Building backend-heavy systems and learning how to ship AI applications that actually work beyond the tutorial.",
+    "Developing scalable backend systems and implementing practical AI workflows using modern tools.",
 
   currentLearning: [
     "AI agents & applied AI",
@@ -53,19 +53,19 @@ export const profile = {
   ],
 
   currentReading:
-    "Currently exploring AI agents, backend systems, system design, and better engineering writing. Recommendations welcome.",
+    "Currently exploring advanced system design, distributed architectures, and LLM optimization.",
 
   currentStruggle:
-    "Balancing DSA, academics, and building polished portfolio projects while learning modern tools like AI, GitHub, and deployment workflows.",
+    "Balancing core academic coursework with building production-grade projects and learning cloud deployment.",
 
   currentObsession:
-    "Vibe coding — using AI to rapidly prototype ideas, debug faster, and turn rough concepts into working apps while still understanding and cleaning up the code myself.",
+    "Rapid prototyping with AI, optimizing database queries, and improving system reliability.",
 
   currentImproving:
-    "Consistency, communication, and the ability to take feedback well — not just building projects, but explaining my thinking clearly and keeping at it through practice.",
+    "Writing cleaner, more maintainable code and improving my understanding of complex system architectures.",
 
   nextMilestone:
-    "Land a strong internship or entry-level role — and eventually use that experience to build something startup-worthy of my own.",
+    "Secure a Software Engineering internship to gain hands-on experience with high-scale production systems.",
 
   openTo: [
     "Internships",
@@ -75,21 +75,21 @@ export const profile = {
   ],
 
   beliefs: [
-    "Good engineers write things down.",
-    "Bugs are not interruptions. They are the curriculum.",
-    "Make the work easy to understand for the next person.",
-    "Learn in public, but with taste.",
-    "Every project should leave a trace.",
-    "I am still becoming, but I am serious.",
+    "Good engineers write clear documentation.",
+    "Bugs are just unhandled edge cases.",
+    "Optimize for readability and maintainability.",
+    "Learn in public through consistent iteration.",
+    "Every system should be observable and scalable.",
+    "Ship early, test often, and iterate.",
   ],
 
   operatingPrinciples: [
-    "Build the smallest honest version first.",
-    "Prefer clarity over cleverness.",
-    "Document while the confusion is still fresh.",
-    "Let projects expose weak spots.",
-    "Finish before starting something new.",
-    "If it works locally, it's not done.",
+    "Build the simplest working version first.",
+    "Prefer clarity over cleverness in code.",
+    "Document architectural decisions thoroughly.",
+    "Write tests for critical paths.",
+    "Finish core features before adding complexity.",
+    "Deployment is the ultimate reality check.",
   ],
 
   favoriteTools: [
@@ -111,10 +111,19 @@ export const profile = {
 
   languages: ["English (Professional)", "Hindi (Native)", "Gujarati (Native)"],
 
-  closingLine:
-    "I'm not trying to look perfect. I'm trying to become undeniable — one build, one bug, one note at a time.",
+  quotes: [
+    "Focus on shipping reliable software — one build, one bug, one commit at a time.",
+    "Bugs are not interruptions. They are the strict curriculum of a better engineer.",
+    "Good systems are built on clarity, not cleverness. Make the architecture easy for the next person.",
+    "We don't just write code for machines. We write code to communicate intent to other engineers.",
+    "Complex systems fail in complex ways. The goal is to recover gracefully, not just prevent failure.",
+    "If it works locally but fails in production, it's not done. Deployment is the ultimate reality check.",
+  ],
 
-  footerLine: "Built as a living archive, not a static resume.",
+  closingLine:
+    "Focus on shipping reliable software — one build, one bug, one commit at a time.",
+
+  footerLine: "Built as a technical archive and portfolio.",
 } as const;
 
 export type ProfileConfig = typeof profile;

@@ -4,6 +4,7 @@ import { getFeaturedProjects, getAllFieldNotes, getAllCrashReports } from "@/lib
 import { ProjectCard } from "@/components/content/ProjectCard";
 import { FieldNoteCard } from "@/components/content/FieldNoteCard";
 import { CrashReportCard } from "@/components/content/CrashReportCard";
+import { RandomQuote } from "@/components/content/RandomQuote";
 import { ScrollReveal, TextReveal } from "@/components/layout/ScrollReveal";
 
 export default async function HomePage() {
@@ -28,24 +29,7 @@ export default async function HomePage() {
         }}
       >
         <div style={{ maxWidth: "1000px" }}>
-          <div style={{ marginBottom: "2rem" }}>
-            <ScrollReveal delay={100} duration={1.2}>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.2em",
-                  fontSize: "0.85rem",
-                  color: "var(--fg-secondary)",
-                  display: "inline-block",
-                  borderBottom: "1px solid var(--border)",
-                  paddingBottom: "0.5rem",
-                }}
-              >
-                Portfolio Edition II &mdash; {new Date().getFullYear()}
-              </span>
-            </ScrollReveal>
-          </div>
+
 
           <h1
             style={{
@@ -228,7 +212,7 @@ export default async function HomePage() {
                 margin: "0 0 3rem 0",
               }}
             >
-              {profile.closingLine}
+              <RandomQuote />
             </h2>
             <Link href="/contact" className="btn-primary">
               Start a Conversation
