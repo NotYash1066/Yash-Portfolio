@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { profile } from "@/config/profile";
 
 export function RandomQuote() {
-  const [quote, setQuote] = useState(profile.quotes[0]);
+  const [quote, setQuote] = useState<string>(profile.quotes[0]);
 
   useEffect(() => {
     const { quotes } = profile;
