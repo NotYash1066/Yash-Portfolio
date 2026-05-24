@@ -42,3 +42,9 @@ next-env.d.ts
 
 # local agent/runtime state
 .omx/
+
+# TUI portfolio virtual environment
+tui/.venv/
+
+# TUI portfolio Python cache
+tui/**/__pycache__/
