@@ -1,5 +1,3 @@
-"""Main Textual application — portfolio TUI with screen routing."""
-
 from textual.app import App
 from textual.binding import Binding
 
@@ -13,9 +11,58 @@ from .screens.quotes_screen import QuotesScreen
 
 
 class PortfolioApp(App):
-    """Terminal portfolio for Yash Karthiya.
+    CSS = """
+    Screen {
+        background: $surface;
+    }
 
-    Navigate between screens using number keys (1-7) or arrow keys.
+    #nav-hint {
+        dock: bottom;
+        height: 1;
+        color: $text-disabled;
+        text-align: center;
+    }
+
+    .page-title {
+        text-style: bold;
+        color: $primary;
+        width: 100%;
+        text-align: center;
+    }
+
+    .separator {
+        color: $primary 30%;
+        width: 100%;
+        text-align: center;
+    }
+
+    .section-heading {
+        text-style: bold;
+        color: $accent;
+        margin: 0 0 0 1;
+    }
+
+    .section-sep {
+        color: $primary 20%;
+        width: 100%;
+    }
+
+    .bullet {
+        color: $text;
+        margin: 0 0 0 2;
+    }
+
+    .content-scroll {
+        width: 100%;
+        height: 1fr;
+        overflow-y: auto;
+        overflow-x: hidden;
+        margin: 0 1;
+    }
+
+    .dim {
+        color: $text-muted;
+    }
     """
 
     SCREENS = {
@@ -63,6 +110,10 @@ class PortfolioApp(App):
 
     def on_mount(self) -> None:
         self.push_screen("home")
+
+
+def _nav_hint() -> str:
+    return " [1]Home [2]About [3]Projects [4]Skills [5]Now [6]Contact [7]Quotes  [q]Quit"
 
 
 def run():
