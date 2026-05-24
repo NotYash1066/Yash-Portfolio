@@ -5,14 +5,23 @@ A TUI (Terminal User Interface) portfolio for Yash Karthiya — runs entirely in
 ## Quick Start
 
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. (Optional) Add your photo
+# 1. (Optional) Add your photo
 #    Place a photo.jpg or photo.png in tui/assets/
 #    The app will convert it to ASCII art automatically
 
-# 3. Run
+# 2. Run (auto-creates venv + installs deps)
+python run.py
+```
+
+The first run creates a virtual environment in `tui/.venv/` and installs
+dependencies automatically. Subsequent runs use the cached venv directly.
+
+### Manual setup (if you prefer)
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 python run.py
 ```
 
