@@ -109,8 +109,8 @@ export function CommandPalette() {
               {[
                 { label: "Go to Index", path: "/" },
                 { label: "Go to Work", path: "/work" },
-                { label: "Go to Field Notes", path: "/field-notes" },
-                { label: "Go to Crash Reports", path: "/crash-reports" },
+                { label: "Go to Writing", path: "/writing" },
+                { label: "Go to Lessons", path: "/lessons" },
                 { label: "Go to Now", path: "/now" },
                 { label: "Go to About", path: "/about" },
                 { label: "Go to Archive", path: "/archive" },

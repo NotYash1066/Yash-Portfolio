@@ -1,0 +1,43 @@
+flowchart LR
+  Student["Student / Guest"] --> UserApp["React User App"]
+  CollegeAdmin["College Admin"] --> AdminApp["React Admin App"]
+  SuperAdmin["Super Admin"] --> SuperAdminApp["React Super Admin App"]
+
+  subgraph Frontends["React + Vite Frontends"]
+    UserApp
+    AdminApp
+    SuperAdminApp
+  end
+
+  Frontends --> Api["FastAPI Backend"]
+
+  subgraph Backend["FastAPI Application"]
+    Api --> AuthRoutes["Auth + Profile Routes"]
+    Api --> ChatRoutes["Chat / Guest Chat Routes"]
+    Api --> AdminRoutes["Document Upload + Query History"]
+    Api --> ApprovalRoutes["Approval + Processing Workflow"]
+    ApprovalRoutes --> Processing["Document Processing Pipeline"]
+    ChatRoutes --> Retrieval["College-scoped RAG Retrieval"]
+  end
+
+  subgraph Supabase["Unified Supabase Project"]
+    Auth["Supabase Auth"]
+    Tables["Postgres Tables"]
+    Storage["Documents Storage Bucket"]
+    Vectors["pgvector document_chunks"]
+    RPC["match_documents RPC"]
+  end
+
+  AuthRoutes --> Auth
+  AdminRoutes --> Storage
+  AdminRoutes --> Tables
+  ApprovalRoutes --> Tables
+  Processing --> Storage
+  Processing --> GeminiEmbeddings["Gemini Embeddings"]
+  Processing --> Vectors
+  Retrieval --> RPC
+  RPC --> Vectors
+  ChatRoutes --> GeminiGeneration["Gemini Generation"]
+  ChatRoutes --> Tables
+  Api --> Notifications["Notification Events"]
+  Notifications --> Tables

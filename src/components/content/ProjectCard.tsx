@@ -7,18 +7,14 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/work/${project.slug}`}
+      className="project-card"
       style={{
         display: "block",
-        padding: "1.75rem",
-        border: "1px solid var(--border)",
-        borderRadius: "6px",
-        background: "var(--surface)",
+        padding: "1.5rem",
         textDecoration: "none",
-        transition: "all 0.25s ease",
         position: "relative",
         overflow: "hidden",
       }}
-      className="project-card"
     >
       {/* Top metadata row */}
       <div
@@ -37,7 +33,7 @@ export function ProjectCard({ project }: { project: Project }) {
             color: "var(--accent)",
             textTransform: "uppercase",
             letterSpacing: "0.1em",
-            fontWeight: 600,
+            fontWeight: 700,
           }}
         >
           {project.type === "selected-work" ? "Selected Work" : project.type}
@@ -64,6 +60,7 @@ export function ProjectCard({ project }: { project: Project }) {
                 color: "var(--warning)",
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
+                fontWeight: 700,
               }}
             >
               {project.hackathonResult || project.hackathon}
@@ -74,12 +71,14 @@ export function ProjectCard({ project }: { project: Project }) {
 
       {/* Title */}
       <h3
+        className="glitch"
         style={{
           fontSize: "1.375rem",
-          fontWeight: 600,
+          fontWeight: 700,
           color: "var(--fg)",
           marginBottom: "0.5rem",
           letterSpacing: "-0.02em",
+          fontFamily: "var(--font-display)",
         }}
       >
         {project.title}
@@ -113,10 +112,10 @@ export function ProjectCard({ project }: { project: Project }) {
               fontFamily: "var(--font-mono)",
               fontSize: "0.675rem",
               padding: "0.25rem 0.625rem",
-              borderRadius: "4px",
               border: "1px solid var(--border)",
               color: "var(--fg-secondary)",
               background: "var(--surface-elevated)",
+              fontWeight: 600,
             }}
           >
             {tech}
@@ -131,7 +130,7 @@ export function ProjectCard({ project }: { project: Project }) {
           alignItems: "center",
           justifyContent: "space-between",
           paddingTop: "1rem",
-          borderTop: "1px solid var(--border)",
+          borderTop: `${2}px solid var(--border)`,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -155,28 +154,24 @@ export function ProjectCard({ project }: { project: Project }) {
             {new Date(project.date).getFullYear()}
           </span>
         </div>
-        {project.readme && (
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
-              borderRadius: "4px",
-              border: "1px solid var(--border)",
-              color: "var(--fg-muted)",
-            }}
-          >
-            README
-          </span>
-        )}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          {project.readme && (
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.6rem",
+                padding: "0.2rem 0.5rem",
+                border: "1px solid var(--border)",
+                color: "var(--fg-muted)",
+                fontWeight: 600,
+              }}
+            >
+              README
+            </span>
+          )}
+          <span className="project-card-arrow">→</span>
+        </div>
       </div>
-
-      <style jsx>{`
-        .project-card:hover {
-          border-color: var(--accent) !important;
-          box-shadow: 0 0 0 1px var(--accent-muted);
-        }
-      `}</style>
     </Link>
   );
 }

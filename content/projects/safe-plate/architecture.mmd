@@ -1,0 +1,39 @@
+flowchart LR
+  Consumer["Consumer"] --> ReactApp["React + Vite Frontend"]
+
+  subgraph Frontend["Browser Experience"]
+    ReactApp --> ImageInput["Image Upload / Camera Input"]
+    ReactApp --> ManualInput["Manual Ingredient Text"]
+    ImageInput --> BrowserOCR["Tesseract.js OCR"]
+    BrowserOCR --> AnalyzeRequest["Analysis Request"]
+    ManualInput --> AnalyzeRequest
+    ReactApp --> HistoryView["Session Scan History"]
+  end
+
+  AnalyzeRequest --> FastAPI["FastAPI Backend"]
+  HistoryView --> FastAPI
+
+  subgraph Backend["Analysis API"]
+    FastAPI --> AnalyzeEndpoint["POST /analyze"]
+    FastAPI --> HistoryEndpoint["GET /history"]
+    AnalyzeEndpoint --> Orchestrator["Analysis Orchestrator"]
+    Orchestrator --> Classifier["Ingredient Classifier"]
+    Orchestrator --> SugarDetector["Sugar Detector"]
+    Orchestrator --> AllergenFilter["Allergen + Dietary Filter"]
+    Orchestrator --> HealthScorer["Health Scorer"]
+    HistoryEndpoint --> SessionStorage["Session Storage"]
+  end
+
+  subgraph DataAndAI["Rules + AI"]
+    StaticData["Ingredient / Sugar / Allergen JSON"]
+    Gemini["Gemini Flash Fallback"]
+    OCRService["pytesseract + OpenCV OCR Service"]
+  end
+
+  Classifier --> StaticData
+  Classifier --> Gemini
+  SugarDetector --> StaticData
+  AllergenFilter --> StaticData
+  ImageInput -.optional backend OCR.-> OCRService
+  Orchestrator --> Result["Health Score + Ingredient Explanations"]
+  Result --> ReactApp

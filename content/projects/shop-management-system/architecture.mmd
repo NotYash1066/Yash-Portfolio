@@ -1,0 +1,40 @@
+flowchart LR
+  ApiClient["API Client / Postman / Frontend"] --> SpringApi["Spring Boot REST API"]
+
+  subgraph App["Spring Boot Application"]
+    SpringApi --> AuthController["Auth Controller"]
+    SpringApi --> ProductController["Product Controller"]
+    SpringApi --> CategoryController["Category Controller"]
+    SpringApi --> SupplierController["Supplier Controller"]
+    SpringApi --> EmployeeController["Employee Controller"]
+    AuthController --> Security["Spring Security"]
+    Security --> UserService["User Service"]
+    ProductController --> ProductService["Product Service"]
+    CategoryController --> CategoryService["Category Service"]
+    SupplierController --> SupplierService["Supplier Service"]
+    EmployeeController --> EmployeeService["Employee Service"]
+  end
+
+  subgraph Persistence["Spring Data JPA + Hibernate"]
+    UserService --> UserRepository["User Repository"]
+    ProductService --> ProductRepository["Product Repository"]
+    CategoryService --> CategoryRepository["Category Repository"]
+    SupplierService --> SupplierRepository["Supplier Repository"]
+    EmployeeService --> EmployeeRepository["Employee Repository"]
+  end
+
+  subgraph PostgreSQL["PostgreSQL Database"]
+    Users["users"]
+    Products["products"]
+    Categories["categories"]
+    Suppliers["suppliers"]
+    Employees["employees"]
+  end
+
+  UserRepository --> Users
+  ProductRepository --> Products
+  CategoryRepository --> Categories
+  SupplierRepository --> Suppliers
+  EmployeeRepository --> Employees
+  Products --> Categories
+  Products --> Suppliers

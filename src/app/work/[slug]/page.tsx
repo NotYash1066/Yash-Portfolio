@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   getProjectBySlug,
+  getProjectArchitecture,
   getProjectReadme,
   getAllProjects,
   getRelatedFieldNotes,
@@ -40,8 +41,9 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   const readme = getProjectReadme(slug);
-  const relatedNotes = getRelatedFieldNotes(slug);
-  const relatedReports = getRelatedCrashReports(slug);
+  const architecture = getProjectArchitecture(slug);
+  const relatedNotes = await getRelatedFieldNotes(slug);
+  const relatedReports = await getRelatedCrashReports(slug);
 
   return (
     <div
@@ -221,6 +223,7 @@ export default async function ProjectPage({
       {/* Tabs: Case Study / README */}
       <ProjectTabs
         caseStudy={project.content || ""}
+        architecture={architecture}
         readme={readme}
       />
 
@@ -252,7 +255,7 @@ export default async function ProjectPage({
             {relatedNotes.map((note) => (
               <Link
                 key={note.slug}
-                href={`/field-notes/${note.slug}`}
+                href={`/writing/${note.slug}`}
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: "0.85rem",
@@ -260,13 +263,13 @@ export default async function ProjectPage({
                   textDecoration: "none",
                 }}
               >
-                📝 {note.title}
+                Writing: {note.title}
               </Link>
             ))}
             {relatedReports.map((report) => (
               <Link
                 key={report.slug}
-                href={`/crash-reports/${report.slug}`}
+                href={`/lessons/${report.slug}`}
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: "0.85rem",
@@ -274,7 +277,7 @@ export default async function ProjectPage({
                   textDecoration: "none",
                 }}
               >
-                🔴 {report.title}
+                Lesson: {report.title}
               </Link>
             ))}
           </div>

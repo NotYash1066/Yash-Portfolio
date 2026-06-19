@@ -2,16 +2,17 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import {
-  getFieldNoteBySlug,
-  getAllFieldNotes,
-  getAdjacentFieldNotes,
+  getCrashReportBySlug,
+  getAllCrashReports,
+  getAdjacentCrashReports,
 } from "@/lib/content";
 
 export async function generateStaticParams() {
-  const notes = getAllFieldNotes();
-  return notes.map((n) => ({ slug: n.slug }));
+  const reports = await getAllCrashReports();
+  return reports.map((r) => ({ slug: r.slug }));
 }
 
 export async function generateMetadata({
@@ -20,25 +21,34 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const note = getFieldNoteBySlug(slug);
-  if (!note) return {};
+  const report = await getCrashReportBySlug(slug);
+  if (!report) return {};
   return {
-    title: note.title,
-    description: note.excerpt,
+    title: `Crash Report — ${report.title}`,
+    description: report.lesson,
   };
 }
 
-export default async function FieldNotePage({
+export default async function CrashReportPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const note = getFieldNoteBySlug(slug);
+  const report = await getCrashReportBySlug(slug);
 
-  if (!note) notFound();
+  if (!report) notFound();
 
-  const { previous, next } = getAdjacentFieldNotes(slug);
+  const allReports = await getAllCrashReports();
+  const reportIndex = allReports.findIndex((r) => r.slug === slug);
+  const { previous, next } = await getAdjacentCrashReports(slug);
+
+  const severityColor = {
+    Low: "var(--fg-muted)",
+    Medium: "var(--warning)",
+    High: "var(--destructive)",
+    Critical: "var(--destructive)",
+  }[report.severity];
 
   return (
     <div
@@ -51,7 +61,7 @@ export default async function FieldNotePage({
     >
       {/* Back link */}
       <Link
-        href="/field-notes"
+        href="/lessons"
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.75rem",
@@ -61,7 +71,7 @@ export default async function FieldNotePage({
           marginBottom: "2rem",
         }}
       >
-        ← Back to Field Notes
+        ← Back to Lessons
       </Link>
 
       {/* Header */}
@@ -80,12 +90,24 @@ export default async function FieldNotePage({
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: "0.65rem",
-              color: "var(--accent)",
+              color: "var(--fg-muted)",
               textTransform: "uppercase",
               letterSpacing: "0.08em",
             }}
           >
-            {note.category}
+            Crash Report #{String(reportIndex + 1).padStart(3, "0")}
+          </span>
+          <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.65rem",
+              color: severityColor,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+            }}
+          >
+            {report.severity}
           </span>
           <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
           <span
@@ -95,42 +117,24 @@ export default async function FieldNotePage({
               color: "var(--fg-muted)",
             }}
           >
-            {new Date(note.date).toLocaleDateString("en-US", {
+            {report.system}
+          </span>
+          <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.65rem",
+              color: "var(--fg-muted)",
+            }}
+          >
+            {new Date(report.date).toLocaleDateString("en-US", {
               month: "long",
               day: "numeric",
               year: "numeric",
             })}
           </span>
-          <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "0.65rem",
-              color: "var(--fg-muted)",
-            }}
-          >
-            {note.readingTime}
-          </span>
-          {note.mood && (
-            <>
-              <span style={{ color: "var(--fg-muted)", fontSize: "0.5rem" }}>·</span>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.625rem",
-                  padding: "0.15rem 0.5rem",
-                  borderRadius: "4px",
-                  background: "var(--accent-muted)",
-                  color: "var(--accent)",
-                }}
-              >
-                {note.mood}
-              </span>
-            </>
-          )}
         </div>
 
-        {/* Title */}
         <h1
           style={{
             fontFamily: "var(--font-display)",
@@ -142,12 +146,47 @@ export default async function FieldNotePage({
             marginBottom: "1rem",
           }}
         >
-          {note.title}
+          {report.title}
         </h1>
+
+        {/* Lesson callout */}
+        <div
+          style={{
+            padding: "1rem 1.25rem",
+            background: "var(--accent-muted)",
+            borderLeft: "3px solid var(--accent)",
+            borderRadius: "0 6px 6px 0",
+            marginBottom: "1.5rem",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              color: "var(--accent)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              display: "block",
+              marginBottom: "0.375rem",
+            }}
+          >
+            Lesson
+          </span>
+          <p
+            style={{
+              fontSize: "0.9rem",
+              color: "var(--fg)",
+              lineHeight: 1.5,
+              fontStyle: "italic",
+            }}
+          >
+            {report.lesson}
+          </p>
+        </div>
 
         {/* Tags */}
         <div style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap" }}>
-          {note.tags.map((tag) => (
+          {report.tags.map((tag) => (
             <span
               key={tag}
               style={{
@@ -167,15 +206,38 @@ export default async function FieldNotePage({
 
       {/* Content */}
       <article className="prose">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {note.content}
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+          {report.content}
         </ReactMarkdown>
       </article>
+
+      {/* Related project */}
+      {report.relatedProject && (
+        <div
+          style={{
+            marginTop: "3rem",
+            paddingTop: "1.5rem",
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          <Link
+            href={`/work/${report.relatedProject}`}
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.8rem",
+              color: "var(--accent)",
+              textDecoration: "none",
+            }}
+          >
+            Related project: {report.relatedProject} →
+          </Link>
+        </div>
+      )}
 
       {/* Navigation */}
       <nav
         style={{
-          marginTop: "4rem",
+          marginTop: "3rem",
           paddingTop: "2rem",
           borderTop: "1px solid var(--border)",
           display: "flex",
@@ -186,11 +248,8 @@ export default async function FieldNotePage({
       >
         {previous ? (
           <Link
-            href={`/field-notes/${previous.slug}`}
-            style={{
-              textDecoration: "none",
-              maxWidth: "45%",
-            }}
+            href={`/lessons/${previous.slug}`}
+            style={{ textDecoration: "none", maxWidth: "45%" }}
           >
             <span
               style={{
@@ -203,12 +262,7 @@ export default async function FieldNotePage({
             >
               ← Previous
             </span>
-            <span
-              style={{
-                fontSize: "0.85rem",
-                color: "var(--fg-secondary)",
-              }}
-            >
+            <span style={{ fontSize: "0.85rem", color: "var(--fg-secondary)" }}>
               {previous.title}
             </span>
           </Link>
@@ -217,12 +271,8 @@ export default async function FieldNotePage({
         )}
         {next ? (
           <Link
-            href={`/field-notes/${next.slug}`}
-            style={{
-              textDecoration: "none",
-              textAlign: "right",
-              maxWidth: "45%",
-            }}
+            href={`/lessons/${next.slug}`}
+            style={{ textDecoration: "none", textAlign: "right", maxWidth: "45%" }}
           >
             <span
               style={{
@@ -235,12 +285,7 @@ export default async function FieldNotePage({
             >
               Next →
             </span>
-            <span
-              style={{
-                fontSize: "0.85rem",
-                color: "var(--fg-secondary)",
-              }}
-            >
+            <span style={{ fontSize: "0.85rem", color: "var(--fg-secondary)" }}>
               {next.title}
             </span>
           </Link>

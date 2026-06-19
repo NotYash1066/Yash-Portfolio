@@ -3,6 +3,11 @@ import path from "path";
 import matter from "gray-matter";
 import { calculateReadingTime } from "./reading-time";
 import type { Project, FieldNote, CrashReport, ArchiveItem } from "./types";
+import {
+  fetchNotionCrashReports,
+  fetchNotionFieldNotes,
+  isNotionConfigured,
+} from "./notion-content";
 
 const contentDir = path.join(process.cwd(), "content");
 
@@ -62,11 +67,17 @@ export function getProjectReadme(slug: string): string | null {
   return fs.readFileSync(readmePath, "utf-8");
 }
 
+export function getProjectArchitecture(slug: string): string | null {
+  const architecturePath = path.join(contentDir, "projects", slug, "architecture.mmd");
+  if (!fs.existsSync(architecturePath)) return null;
+  return fs.readFileSync(architecturePath, "utf-8");
+}
+
 /* ================================================================
-   Field Notes
+   Writing (formerly Field Notes)
    ================================================================ */
-export function getAllFieldNotes(): FieldNote[] {
-  const notesDir = path.join(contentDir, "field-notes");
+function getAllLocalFieldNotes(): FieldNote[] {
+  const notesDir = path.join(contentDir, "writing");
   if (!fs.existsSync(notesDir)) return [];
 
   const files = fs.readdirSync(notesDir).filter((f) => f.endsWith(".mdx"));
@@ -92,8 +103,8 @@ export function getAllFieldNotes(): FieldNote[] {
     ) as FieldNote[];
 }
 
-export function getFieldNoteBySlug(slug: string): FieldNote | null {
-  const notesDir = path.join(contentDir, "field-notes");
+function getLocalFieldNoteBySlug(slug: string): FieldNote | null {
+  const notesDir = path.join(contentDir, "writing");
   if (!fs.existsSync(notesDir)) return null;
 
   const files = fs.readdirSync(notesDir).filter((f) => f.endsWith(".mdx"));
@@ -116,11 +127,33 @@ export function getFieldNoteBySlug(slug: string): FieldNote | null {
   return null;
 }
 
+export async function getAllFieldNotes(): Promise<FieldNote[]> {
+  if (!isNotionConfigured()) return getAllLocalFieldNotes();
+
+  try {
+    return await fetchNotionFieldNotes();
+  } catch (error) {
+    console.error("Falling back to local writing content after Notion fetch failed.", error);
+    return getAllLocalFieldNotes();
+  }
+}
+
+export async function getFieldNoteBySlug(slug: string): Promise<FieldNote | null> {
+  if (!isNotionConfigured()) return getLocalFieldNoteBySlug(slug);
+
+  try {
+    return (await fetchNotionFieldNotes()).find((note) => note.slug === slug) ?? null;
+  } catch (error) {
+    console.error("Falling back to local writing content after Notion fetch failed.", error);
+    return getLocalFieldNoteBySlug(slug);
+  }
+}
+
 /* ================================================================
-   Crash Reports
+   Lessons (formerly Crash Reports)
    ================================================================ */
-export function getAllCrashReports(): CrashReport[] {
-  const reportsDir = path.join(contentDir, "crash-reports");
+function getAllLocalCrashReports(): CrashReport[] {
+  const reportsDir = path.join(contentDir, "lessons");
   if (!fs.existsSync(reportsDir)) return [];
 
   const files = fs.readdirSync(reportsDir).filter((f) => f.endsWith(".mdx"));
@@ -146,8 +179,8 @@ export function getAllCrashReports(): CrashReport[] {
     ) as CrashReport[];
 }
 
-export function getCrashReportBySlug(slug: string): CrashReport | null {
-  const reportsDir = path.join(contentDir, "crash-reports");
+function getLocalCrashReportBySlug(slug: string): CrashReport | null {
+  const reportsDir = path.join(contentDir, "lessons");
   if (!fs.existsSync(reportsDir)) return null;
 
   const files = fs.readdirSync(reportsDir).filter((f) => f.endsWith(".mdx"));
@@ -168,6 +201,28 @@ export function getCrashReportBySlug(slug: string): CrashReport | null {
   }
 
   return null;
+}
+
+export async function getAllCrashReports(): Promise<CrashReport[]> {
+  if (!isNotionConfigured()) return getAllLocalCrashReports();
+
+  try {
+    return await fetchNotionCrashReports();
+  } catch (error) {
+    console.error("Falling back to local lessons content after Notion fetch failed.", error);
+    return getAllLocalCrashReports();
+  }
+}
+
+export async function getCrashReportBySlug(slug: string): Promise<CrashReport | null> {
+  if (!isNotionConfigured()) return getLocalCrashReportBySlug(slug);
+
+  try {
+    return (await fetchNotionCrashReports()).find((report) => report.slug === slug) ?? null;
+  } catch (error) {
+    console.error("Falling back to local lessons content after Notion fetch failed.", error);
+    return getLocalCrashReportBySlug(slug);
+  }
 }
 
 /* ================================================================
@@ -193,14 +248,14 @@ export function getNowPageContent(): string {
 /* ================================================================
    Related Content
    ================================================================ */
-export function getRelatedFieldNotes(projectSlug: string): FieldNote[] {
-  return getAllFieldNotes().filter(
+export async function getRelatedFieldNotes(projectSlug: string): Promise<FieldNote[]> {
+  return (await getAllFieldNotes()).filter(
     (note) => note.relatedProject === projectSlug
   );
 }
 
-export function getRelatedCrashReports(projectSlug: string): CrashReport[] {
-  return getAllCrashReports().filter(
+export async function getRelatedCrashReports(projectSlug: string): Promise<CrashReport[]> {
+  return (await getAllCrashReports()).filter(
     (report) => report.relatedProject === projectSlug
   );
 }
@@ -208,8 +263,8 @@ export function getRelatedCrashReports(projectSlug: string): CrashReport[] {
 /* ================================================================
    Navigation helpers
    ================================================================ */
-export function getAdjacentFieldNotes(slug: string) {
-  const notes = getAllFieldNotes();
+export async function getAdjacentFieldNotes(slug: string) {
+  const notes = await getAllFieldNotes();
   const index = notes.findIndex((n) => n.slug === slug);
   return {
     previous: index < notes.length - 1 ? notes[index + 1] : null,
@@ -217,8 +272,8 @@ export function getAdjacentFieldNotes(slug: string) {
   };
 }
 
-export function getAdjacentCrashReports(slug: string) {
-  const reports = getAllCrashReports();
+export async function getAdjacentCrashReports(slug: string) {
+  const reports = await getAllCrashReports();
   const index = reports.findIndex((r) => r.slug === slug);
   return {
     previous: index < reports.length - 1 ? reports[index + 1] : null,

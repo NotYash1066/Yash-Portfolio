@@ -1,0 +1,52 @@
+flowchart LR
+  Learner["Learner / Teacher"] --> ReactClient["React + Vite Client"]
+
+  subgraph Client["SkillSwap Frontend"]
+    ReactClient --> ProfileUI["Profiles + Skills"]
+    ReactClient --> MatchUI["Match Discovery"]
+    ReactClient --> ChatUI["Real-time Chat"]
+    ReactClient --> CallUI["Video Call UI"]
+    ReactClient --> WhiteboardUI["Collaborative Whiteboard"]
+  end
+
+  ReactClient --> ExpressApi["Express REST API"]
+  ReactClient --> SocketServer["Socket.io Realtime Server"]
+
+  subgraph Server["Node.js Backend"]
+    ExpressApi --> AuthRoutes["JWT Auth Routes"]
+    ExpressApi --> MatchRoutes["Matching Routes"]
+    ExpressApi --> ChatRoutes["Chat Room Routes"]
+    ExpressApi --> ReviewRoutes["Review Routes"]
+    ExpressApi --> NotificationRoutes["Notification Routes"]
+    SocketServer --> ChatHandlers["Message + Typing Handlers"]
+    SocketServer --> MatchEvents["Match Event Notifications"]
+    SocketServer --> WhiteboardEvents["Whiteboard Sync Events"]
+  end
+
+  subgraph RealtimeMedia["Peer Collaboration"]
+    CallUI --> WebRTC["WebRTC Peer Connection"]
+    WebRTC --> PeerJS["PeerJS / Simple-Peer Signaling"]
+    WhiteboardUI --> Fabric["Fabric.js Canvas"]
+  end
+
+  subgraph Database["MongoDB + Mongoose"]
+    Users["Users"]
+    Skills["Skills"]
+    Matches["Matches"]
+    Rooms["Chat Rooms"]
+    Messages["Messages"]
+    Reviews["Reviews"]
+    Notifications["Notifications"]
+  end
+
+  AuthRoutes --> Users
+  MatchRoutes --> Users
+  MatchRoutes --> Skills
+  MatchRoutes --> Matches
+  ChatRoutes --> Rooms
+  ChatRoutes --> Messages
+  ReviewRoutes --> Reviews
+  NotificationRoutes --> Notifications
+  ChatHandlers --> Messages
+  MatchEvents --> Notifications
+  WhiteboardEvents --> SocketServer
